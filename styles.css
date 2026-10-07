@@ -1098,6 +1098,82 @@ html.panel-open { overflow: hidden; }
 }
 @media (min-width: 640px) { .video-big { padding: 40px 32px; } }
 
+/* --- Playable game (Labyrinth) above its boards. The game draws on a fixed 1440 × 832 canvas
+   and scales itself to whatever size its screen is. Toolbar above it: Back steps through the
+   game's own pages; "Expand game" makes the whole frame (toolbar + game) fullscreen, or fills
+   the window where fullscreen isn't available (e.g. iPhone). */
+.panel-inner--flush { padding-top: 0; }
+.game-block {
+  padding: 24px 24px 28px;
+  background: #1b2c32; /* the cave teal at the top of the Labyrinth board */
+}
+.game-frame { display: flex; flex-direction: column; gap: 12px; }
+.game-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.game-screen {
+  aspect-ratio: 1440 / 832;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0e1124;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+}
+.game-screen iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.game-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 12px;
+  border: 1px solid rgba(166, 236, 230, .55);
+  border-radius: 99px;
+  background: rgba(8, 26, 31, .82);
+  color: #d9fbf7;
+  font: 600 14px/1 "Poppins", "Segoe UI", Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color .2s, opacity .2s, transform .2s var(--ease-pop);
+}
+.game-btn:hover:not(:disabled) { background: rgba(14, 48, 56, .95); transform: scale(1.04); }
+.game-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.game-btn:disabled { opacity: .35; cursor: default; } /* Back on the game's first screen */
+.game-btn svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.game-expand .icon-shrink,
+.game-frame.is-expanded .game-expand .icon-expand { display: none; }
+.game-frame.is-expanded .game-expand .icon-shrink { display: inline; }
+.game-hint {
+  margin: 14px 4px 0;
+  color: #b9d9d6;
+  font: 400 14px/1.5 "Poppins", "Segoe UI", Arial, sans-serif;
+  text-align: center;
+}
+@media (min-width: 640px) { .game-block { padding: 28px 32px 32px; } }
+
+/* Expanded: toolbar along the top, the game fills the rest of the screen */
+.game-frame.is-expanded {
+  gap: 10px;
+  padding: 10px;
+  background: #1b2c32;
+}
+.game-frame.is-expanded .game-screen {
+  flex: 1;
+  min-height: 0;
+  aspect-ratio: auto;
+  border-radius: 10px;
+  box-shadow: none;
+}
+.game-frame.is-expanded:not(:fullscreen) { /* fallback where fullscreen isn't available */
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+}
+
 /* No stray focus line or blinking text cursor in the project panel when opened with the mouse.
    Keyboard users still get the orange focus ring on the buttons (:focus-visible). */
 .project-panel,

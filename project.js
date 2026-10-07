@@ -15,6 +15,67 @@ document.querySelectorAll('.video-lite').forEach((box) => {
   });
 });
 
+// --- Game: "Expand game" makes the frame fullscreen, or fills the window where fullscreen
+// isn't available (iPhone). The game inside rescales itself to the new size.
+function setGameExpanded(frame, expand) {
+  const button = frame.querySelector('.game-expand');
+  frame.classList.toggle('is-expanded', expand);
+  button.setAttribute('aria-pressed', String(expand));
+  button.querySelector('.game-expand-label').textContent = expand ? 'Exit full screen' : 'Expand game';
+  if (expand && frame.requestFullscreen) {
+    frame.requestFullscreen().catch(() => {}); // refused: the CSS fallback still fills the window
+  } else if (!expand && document.fullscreenElement === frame) {
+    document.exitFullscreen().catch(() => {});
+  }
+  frame.querySelector('iframe').focus();
+}
+
+document.querySelectorAll('.game-frame').forEach((frame) => {
+  frame.querySelector('.game-expand').addEventListener('click', () => {
+    setGameExpanded(frame, !frame.classList.contains('is-expanded'));
+  });
+  // Back: the game moves between its own pages (menu → game → tutorial). Keep our own list of
+  // them so Back only ever steps back inside the game, never takes the site itself back a page.
+  const iframe = frame.querySelector('iframe');
+  const back = frame.querySelector('.game-back');
+  let visited = [];
+  let goingBack = false;
+  back.addEventListener('click', () => {
+    if (visited.length < 2) return;
+    visited.pop();
+    goingBack = true;
+    iframe.contentWindow.location.replace(visited[visited.length - 1]); // replace: no extra history
+    iframe.focus();
+  });
+
+  iframe.addEventListener('load', () => {
+    let page;
+    try { page = iframe.contentWindow.location.href; } catch { page = null; }
+    if (!page || page === 'about:blank') {
+      visited = []; // panel closed: start over next time
+    } else if (goingBack) {
+      goingBack = false;
+    } else if (visited[visited.length - 1] !== page) {
+      visited.push(page);
+    }
+    back.disabled = visited.length < 2;
+    if (!page || page === 'about:blank') return;
+    // While playing, key presses go to the game itself, so listen there for Esc too
+    iframe.contentWindow.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && frame.classList.contains('is-expanded')) setGameExpanded(frame, false);
+    });
+  });
+});
+
+// Leaving fullscreen with Esc or the browser's own controls shrinks the frame back
+document.addEventListener('fullscreenchange', () => {
+  document.querySelectorAll('.game-frame.is-expanded').forEach((frame) => {
+    if (document.fullscreenElement !== frame && frame.dataset.wasFullscreen) setGameExpanded(frame, false);
+    if (document.fullscreenElement === frame) frame.dataset.wasFullscreen = '1';
+    else delete frame.dataset.wasFullscreen;
+  });
+});
+
 // --- Panel: slides up over the page; the page behind is blurred (::backdrop in styles.css).
 const reduceMotionPanel = matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -29,6 +90,8 @@ function openProject(id) {
   if (!panel || panel.open) return;
   panel.classList.remove('is-closing'); // never reopen in a half-closed state
   panel.querySelector('.panel-scroll').scrollTop = 0;
+  // Embedded games only load once their panel is opened
+  panel.querySelectorAll('iframe[data-src]').forEach((f) => { f.src = f.dataset.src; });
   panel.showModal();
   // Park focus on the panel itself (not next to the X) so no focus line or text cursor shows
   panel.tabIndex = -1;
@@ -43,7 +106,8 @@ function resetPanel(panel) {
   panel.classList.remove('is-closing');
   if (panel.open) panel.close();
   if (!document.querySelector('.project-panel[open]')) setPanelOpen(false);
-  panel.querySelectorAll('.video-lite iframe').forEach((f) => { f.src = 'about:blank'; });
+  panel.querySelectorAll('.video-lite iframe, iframe[data-src]').forEach((f) => { f.src = 'about:blank'; });
+  panel.querySelectorAll('.game-frame.is-expanded').forEach((frame) => setGameExpanded(frame, false));
   panel.querySelectorAll('video').forEach((v) => v.pause());
 }
 
@@ -63,7 +127,12 @@ function closePanel(panel) {
 
 document.querySelectorAll('.project-panel').forEach((panel) => {
   panel.querySelector('.panel-close').addEventListener('click', () => closePanel(panel));
-  panel.addEventListener('cancel', (e) => { e.preventDefault(); closePanel(panel); }); // Esc
+  panel.addEventListener('cancel', (e) => { // Esc
+    e.preventDefault();
+    const expanded = panel.querySelector('.game-frame.is-expanded');
+    if (expanded) setGameExpanded(expanded, false); // shrink the game first
+    else closePanel(panel);
+  });
   panel.addEventListener('click', (e) => { if (e.target === panel) closePanel(panel); }); // click on the blur
   panel.addEventListener('close', () => resetPanel(panel)); // the browser closed it for us
 });

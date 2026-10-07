@@ -9,49 +9,6 @@ const lenis = !reduceMotion.matches && 'Lenis' in window
   : null;
 window.lenis = lenis; // project.js pauses it while a project panel is open
 
-// Brake at Projects: after the bubble, momentum from scrolling through the animation used to
-// carry people straight past the carousel. When Projects comes up the screen while scrolling
-// down, the page settles onto it once. Scroll on and it lets go; scrolling back above re-arms it.
-if (lenis) {
-  const projectsSection = document.querySelector('#projects');
-  let armed = true;
-  let settling = false;
-
-  // Menu links (About / Projects / Contact) and other in-page links jump straight to their
-  // target: don't brake at Projects on the way past.
-  let linkJump = false;
-  let linkJumpTimer;
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('a[href^="#"]')) return;
-    linkJump = true;
-    clearTimeout(linkJumpTimer);
-    linkJumpTimer = setTimeout(() => { linkJump = false; }, 2500); // never stays on
-  });
-
-  lenis.on('scroll', ({ direction }) => {
-    if (linkJump) {
-      // Let the link's glide finish, then go back to normal
-      if (!lenis.isScrolling) linkJump = false;
-      return;
-    }
-    if (settling) return;
-    const top = projectsSection.getBoundingClientRect().top;
-    if (top > innerHeight) armed = true;           // back above Projects: arm again
-    if (armed && direction === 1 && top > 0 && top < innerHeight * 0.55) {
-      armed = false;
-      settling = true;
-      lenis.scrollTo(projectsSection, {
-        duration: 0.9,
-        lock: true, // ignore the rest of the flick while settling
-        easing: (t) => 1 - (1 - t) ** 3,
-        onComplete: () => { settling = false; },
-      });
-      // Never stay in "settling" if the glide gets interrupted (e.g. by a key press)
-      setTimeout(() => { settling = false; lenis.isLocked = false; }, 1200);
-    }
-  });
-}
-
 // --- Cover: as you scroll away, the tiles and circles float up faster than the page and
 // turn slightly, each at its own speed (styles.css reads --scroll, --speed and --spin).
 const cover = document.querySelector('.page');

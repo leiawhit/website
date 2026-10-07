@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,0,1;9..144,600,0,1;9..144,700,0,1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="styles.css?v=20261007141306">
+  <link rel="stylesheet" href="styles.css?v=20261007154552">
 </head>
 <body>
   <!-- Inline so the photo clip and "!" colour work even when opened straight from disk -->
@@ -264,13 +264,14 @@
               <p class="card-text">Explored the needs, workflows and challenges of GLAM organisations. Through stakeholder interviews, observation, market research and user journey mapping, I identified patterns and opportunities for improvement, translating these insights into a physical tool for creating bespoke protective foam inserts for irregular objects.</p>
               <button class="card-open" type="button" data-open="behind-the-collection">View project <span aria-hidden="true">→</span></button>
             </article>
-            <article class="card">
+            <article class="card" data-project="labyrinth">
               <img class="card-img" src="assets/Labirynth.png" alt="Labyrinth, a hand-drawn maze strategy game" width="2560" height="1664" decoding="async">
               <ul class="tags" aria-label="Skills">
                 <li class="tag tag--blue">Programming</li>
               </ul>
               <h3 class="card-title">Labyrinth</h3>
               <p class="card-text">Developed a 2–4 player strategy game where players shift a 7×7 maze and collect matching hearts. Built the game engine in JavaScript with dynamic tile shifting and BFS pathfinding. Hand drew the interface and character animations to add storytelling and create an indie visual style.</p>
+              <button class="card-open" type="button" data-open="labyrinth">View project <span aria-hidden="true">→</span></button>
             </article>
             <article class="card" data-project="aerodynamic-suv">
               <img class="card-img" src="assets/AerodynamicSUV.png" alt="CFD flow simulation around a simplified SUV body" width="1864" height="1276" decoding="async">
@@ -431,6 +432,43 @@
     </div>
   </dialog>
 
+  <dialog class="project-panel" id="panel-labyrinth" aria-labelledby="panel-labyrinth-title">
+    <div class="panel-scroll" data-lenis-prevent>
+      <div class="panel-bar">
+        <h2 id="panel-labyrinth-title" class="panel-title">Labyrinth</h2>
+        <button class="panel-close" type="button" aria-label="Close project"><span aria-hidden="true">×</span></button>
+      </div>
+
+      <div class="panel-inner panel-inner--flush">
+        <!-- Playable game (labyrinth-game/). It only loads when the panel opens (project.js). -->
+        <div class="game-block">
+          <div class="game-frame">
+            <div class="game-toolbar">
+              <button class="game-btn game-back" type="button" disabled>
+                <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M15 5l-7 7 7 7"/></svg>
+                <span>Back</span>
+              </button>
+              <button class="game-btn game-expand" type="button" aria-pressed="false">
+                <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path class="icon-expand" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><path class="icon-shrink" d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>
+                <span class="game-expand-label">Expand game</span>
+              </button>
+            </div>
+            <div class="game-screen">
+              <iframe data-src="labyrinth-game/index.html" title="Labyrinth, playable game" allow="fullscreen; autoplay"></iframe>
+            </div>
+          </div>
+          <p class="game-hint">Choose 2–4 players and take turns on one screen. Best played expanded on a laptop or desktop.</p>
+        </div>
+
+        <div class="board">
+          <img src="assets/projects/labyrinth/board-01.webp?v=2" width="1800" height="1170" alt="Overview: Labyrinth is a browser based version of the Labyrinth board game, built with JavaScript ES modules, functional game logic, BFS pathfinding, sprite animations and automated testing. Tools: JavaScript, ES Modules, Ramda, HTML/CSS, Mocha and JSDoc. A 2–4 player strategy game where players shift a 7×7 maze to create new paths, then move around the board to collect three colour-matched hearts. The four hand-drawn characters, Earth, Fire, Shadow and Wind, each with their heart. I designed and hand drew the characters and visual elements to give the game an indie, illustrated style, using visual storytelling throughout the interface to make the experience more engaging and help communicate the game’s world and objectives. I built the game so that the game logic is kept separate from the DOM, which made it easier to test the rules independently and update the board as the game changes." loading="lazy" decoding="async">
+          <img src="assets/projects/labyrinth/board-02.webp" width="1800" height="719" alt="Architecture: menu.js handles player selection and the screen transition, then hands over to game.js, the game engine handling board state, rules, shifts, movement and pathfinding. game.js updates Stats.js, which tracks the hearts collected by each player, and Labyrinth.js, which handles DOM rendering, user interaction and sprite animations." loading="lazy" decoding="async">
+          <img src="assets/projects/labyrinth/board-03.webp" width="1800" height="1000" alt="Key implementations. Immutable game state: rather than changing the existing game state, each action creates a new state, which helped prevent unexpected changes and made the game logic easier to test. BFS pathfinding: breadth-first search finds which tiles a player can reach and generates the route between two positions. Dynamic tile shifting: shifting a row or column moves the tiles around the board, including carrying any players standing on that line, and the spare tile wraps around to the opposite side. Ramda: used for a number of collection and transformation operations, keeping some of the game logic and test code more concise." loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <dialog class="project-panel" id="panel-aerodynamic-suv" aria-labelledby="panel-aerodynamic-suv-title">
     <div class="panel-scroll" data-lenis-prevent>
       <div class="panel-bar">
@@ -526,7 +564,7 @@
   </dialog>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-  <script src="script.js?v=20261007141148"></script>
-  <script src="project.js?v=20261007141148"></script>
+  <script src="script.js?v=20261007154552"></script>
+  <script src="project.js?v=20261007154552"></script>
 </body>
 </html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aerodynamic SUV — Leia</title>
+  <meta name="description" content="Aerodynamic SUV: the full design and CFD process, from problem mapping and benchmarking to ideation, simulation and an improved design.">
+  <meta name="theme-color" content="#fff8e7">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,0,1;9..144,600,0,1;9..144,700,0,1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261007141306">
+</head>
+<body>
+  <div class="project-page project-page--wide">
+    <header class="project-header">
+      <a class="back-link" href="index.html#open=aerodynamic-suv"><span aria-hidden="true">←</span> Project overview</a>
+      <h1 class="panel-title">Aerodynamic SUV</h1>
+    </header>
+
+    <main class="panel-inner">
+      <div class="board board--framed">
+      <img src="assets/projects/aerodynamic-suv/page-01.webp" width="1684" height="1600" alt="SUV problem map: performance impacts of large frontal area, side mirrors, roof rails, high ride height, wheel wells, underbody flow and the rear wake, with the biggest aerodynamic levers for SUVs." decoding="async">
+      <img src="assets/projects/aerodynamic-suv/page-02.webp" width="1684" height="1600" alt="Benchmarking against the Tesla Model Y, Mercedes-Benz EQE SUV and Porsche Macan Electric, comparing drag coefficients and features such as aero wheels, rear roof spoilers, active grille shutters and diffusers." loading="lazy" decoding="async">
+      <img src="assets/projects/aerodynamic-suv/page-03.webp" width="1684" height="1600" alt="Feature ideation: rear spoiler, air curtains, lateral guide vanes and diffuser concepts, with evaluations of each." loading="lazy" decoding="async">
+      <img src="assets/projects/aerodynamic-suv/page-04.webp" width="1684" height="1600" alt="Sketch ideation: combining and refining concept features, developing and optimising the selected concept, leading to the final concept." loading="lazy" decoding="async">
+      <img src="assets/projects/aerodynamic-suv/page-05.webp" width="1684" height="1600" alt="Final design with its main focus areas, and low fidelity CAD built in Blender with simplified geometry for computational efficiency. CFD setup." loading="lazy" decoding="async">
+      <img src="assets/projects/aerodynamic-suv/page-06.webp" width="1684" height="1600" alt="CFD setup: virtual wind tunnel dimensions, meshing strategy, physics and solver settings, and running calculations. Frontal loading and wheelhouse flow control: front bumper, windscreen, rear wheel arch, front wheel arch and rear wheel analysis." loading="lazy" decoding="async">
+      <img src="assets/projects/aerodynamic-suv/page-07.webp" width="1684" height="1600" alt="Wake recovery: the problem, rear diffuser, sloped rear and spoiler, and lateral guide vanes, each with pressure and velocity plots and takeaways." loading="lazy" decoding="async">
+      <img src="assets/projects/aerodynamic-suv/page-08.webp" width="1684" height="1422" alt="Coefficient analysis and model limitations: drag coefficient about 0.361 and lift coefficient calculations, limitations, CFD results overview, changed regions on the original design, and the improved design." loading="lazy" decoding="async">
+      </div>
+
+    </main>
+  </div>
+
+  <a class="back-to-start" href="#top"><span aria-hidden="true">↑</span> Back to the start</a>
+  <script>
+    // Show "Back to the start" once you've scrolled a screen down
+    const backBtn = document.querySelector('.back-to-start');
+    const onScroll = () => backBtn.classList.toggle('is-visible', scrollY > innerHeight);
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+    });
+  </script>
+</body>
+</html>

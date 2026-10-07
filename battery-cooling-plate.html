@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Battery Cooling Plate — Leia</title>
+  <meta name="description" content="Battery Cooling Plate: the full process from the brief and hand calculations to CFD setup, results, benchmarking and design iterations.">
+  <meta name="theme-color" content="#fff8e7">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,0,1;9..144,600,0,1;9..144,700,0,1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261007141306">
+</head>
+<body>
+  <div class="project-page project-page--wide">
+    <header class="project-header">
+      <a class="back-link" href="index.html#open=battery-cooling-plate"><span aria-hidden="true">←</span> Project overview</a>
+      <h1 class="panel-title">Battery Cooling Plate</h1>
+    </header>
+
+    <main class="process-slides">
+      <section class="process-slide" aria-label="The Brief">
+        <img src="assets/projects/battery-cooling-plate/slide-01.webp" width="1684" height="611" alt="The brief: battery thermal management for Frankie, a taxi fleet manager who wants to reduce long-term fleet maintenance costs. Fixed parameters: a 420 × 210 × 70 mm battery pack, an aluminium 6061-T4 plate, water coolant at 12 g/s and 25 °C." decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Rationale">
+        <img src="assets/projects/battery-cooling-plate/slide-02.webp" width="1684" height="1192" alt="Rationale: design objectives, four initial ideas evaluated on topology, temperature uniformity, pressure drop, surface coverage and manufacturability, benchmarking, CFD comparison and the selected concept." decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Hand Calculations: Optimising the Diameter">
+        <img src="assets/projects/battery-cooling-plate/slide-03.webp" width="1684" height="1192" alt="Hand calculations: assumptions, parameters, pressure and heat transfer equations written in Python, and graphs of Reynolds number, pressure drop, battery temperature and flow velocity against diameter, leading to a chosen diameter of 10 mm." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Hand Calculations: Pressure and Heat Transfer">
+        <img src="assets/projects/battery-cooling-plate/slide-04.webp" width="1684" height="1192" alt="Hand calculations of pressure (flow velocity, Reynolds number, friction factor, major and minor losses, pumping power) and heat transfer (heat generation, convection and conduction resistance, coolant and interface temperatures)." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="CFD Setup and Meshing">
+        <img src="assets/projects/battery-cooling-plate/slide-05.webp" width="1684" height="1192" alt="CFD setup and meshing: geometry, materials, boundary conditions, model assumptions, and mesh selection, refinement and quality checks." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="CFD Results">
+        <img src="assets/projects/battery-cooling-plate/slide-06.webp" width="1684" height="1192" alt="CFD results: temperature contours and streamlines, velocity streamlines and heat flux, pressure contours, and design considerations." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Hand Calculations vs CFD Results">
+        <img src="assets/projects/battery-cooling-plate/slide-07.webp" width="1684" height="1192" alt="Hand calculations vs CFD results: pressure drop, average and maximum temperature compared, with the discrepancies explained and model limitations." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Benchmarking">
+        <img src="assets/projects/battery-cooling-plate/slide-08.webp" width="1684" height="1192" alt="Benchmarking of the pumpkin, optimised serpentine, experimenting with bends, and multiple inlet and outlet designs, with key features, limitations and how each informed the design." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Iterative Design Development">
+        <img src="assets/projects/battery-cooling-plate/slide-09.webp" width="1684" height="1192" alt="Iterative design development: exploring inlet and outlet placement and channel placement across four ideas, leading to the final idea." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="CFD on Iterated Design">
+        <img src="assets/projects/battery-cooling-plate/slide-10.webp" width="1684" height="1192" alt="CFD on the iterated design: temperature uniformity, pressure drop, heat flux, geometry optimisation and the optimised CFD results." loading="lazy" decoding="async">
+      </section>
+    </main>
+  </div>
+
+  <a class="back-to-start" href="#top"><span aria-hidden="true">↑</span> Back to the start</a>
+  <script>
+    // Show "Back to the start" once you've scrolled a screen down
+    const backBtn = document.querySelector('.back-to-start');
+    const onScroll = () => backBtn.classList.toggle('is-visible', scrollY > innerHeight);
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+    });
+  </script>
+</body>
+</html>

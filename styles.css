@@ -1,0 +1,1239 @@
+/* Design is 1280 × 813. --u is one design pixel, scaled to fit the viewport. */
+:root {
+  --cream: #fff8e7;
+  --ink: #000;
+  --ink-soft: #484848;
+  --orange: #ee6a05;
+  --u: min(100vw / 1280, 100svh / 813);
+  --cu: var(--u); /* unit for corner pieces */
+  --ease-pop: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 400;
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+/* ---------- Shapes ---------- */
+
+.corners { --k: var(--cu); }
+.cluster { --k: var(--u); }
+
+.piece, .dot {
+  position: absolute;
+  left: calc(var(--l) * var(--k));
+  top: calc(var(--t) * var(--k));
+  right: calc(var(--rt) * var(--k));
+  bottom: calc(var(--b) * var(--k));
+  width: calc(var(--w) * var(--k));
+  height: calc(var(--h) * var(--k));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.piece > img, .dot > img {
+  flex: none;
+  display: block;
+  width: calc(var(--iw) * var(--k));
+  height: calc(var(--ih) * var(--k));
+  rotate: var(--r, 0deg);
+  scale: 1 var(--sy, 1);
+}
+
+/* As you scroll, each tile and circle rises faster than the page and turns slightly */
+.page .piece {
+  translate: 0 calc(var(--scroll, 0) * var(--speed, 0) * -1px);
+  rotate: calc(var(--scroll, 0) * var(--spin, 0) * 1deg);
+}
+
+/* Tetris pieces and circles lift and tilt on hover */
+.piece {
+  z-index: 1;
+  transition: transform .4s var(--ease-pop);
+}
+.piece:hover {
+  z-index: 3;
+  transform: translateY(calc(-10 * var(--k))) rotate(var(--tilt, -6deg));
+}
+
+.svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ---------- Nav ---------- */
+
+.nav {
+  position: absolute;
+  z-index: 4;
+  top: calc(54 * var(--u));
+  left: calc(50% - 241 * var(--u));
+  display: flex;
+  gap: calc(100 * var(--u));
+}
+
+.nav-btn {
+  position: relative;
+  font-size: calc(32 * var(--u));
+  line-height: calc(39 * var(--u));
+  color: var(--ink-soft);
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 4px;
+  transition: color .2s ease, transform .3s var(--ease-pop);
+}
+.nav-btn::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: calc(-4 * var(--u));
+  height: max(2px, calc(3 * var(--u)));
+  border-radius: 99px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+.nav-btn:hover, .nav-btn:focus-visible {
+  color: var(--ink);
+  transform: translateY(calc(-2 * var(--u)));
+}
+.nav-btn:hover::after, .nav-btn:focus-visible::after { transform: scaleX(1); }
+.nav-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 6px; }
+
+/* ---------- Scroll cue: bobbing hand-drawn arrow, fades out as you scroll ---------- */
+
+.scroll-cue {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: max(20px, calc(40 * var(--u)));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  translate: -50% 0;
+  color: var(--orange);
+  text-decoration: none;
+  opacity: clamp(0, 1 - var(--scroll, 0) / 250, 1);
+  touch-action: manipulation;
+}
+.scroll-cue-text {
+  font-family: "More Sugar", "Fraunces", cursive;
+  font-size: max(18px, calc(24 * var(--u)));
+  letter-spacing: .02em;
+  rotate: -4deg;
+}
+.scroll-cue-arrow {
+  width: max(30px, calc(40 * var(--u)));
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: cue-bob 1.6s ease-in-out infinite;
+}
+@keyframes cue-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+.scroll-cue:hover .scroll-cue-arrow { animation-duration: .8s; }
+.scroll-cue:focus-visible { outline: 2px solid var(--orange); outline-offset: 6px; border-radius: 8px; }
+
+/* ---------- Hero ---------- */
+
+/* Hero origin = design point (91, 192) */
+.hero {
+  position: absolute;
+  z-index: 2;
+  left: calc(50% - 549 * var(--u));
+  top: calc(50% - 214.5 * var(--u));
+}
+
+.cluster {
+  position: relative;
+  width: calc(359 * var(--u));
+  height: calc(375 * var(--u));
+}
+
+/* Photo shape = assets/photo-mask.svg, inlined as #photo-clip */
+.photo {
+  position: absolute;
+  z-index: 0;
+  left: calc(54 * var(--u)); /* design: 94, nudged left on request */
+  top: calc(53 * var(--u));
+  width: calc(263 * var(--u));
+  height: calc(239 * var(--u));
+  overflow: hidden;
+  clip-path: url(#photo-clip);
+}
+.photo img {
+  position: absolute;
+  left: calc(-166.39 * var(--u));
+  top: calc(-112.94 * var(--u));
+  width: calc(595.56 * var(--u));
+  height: calc(597.81 * var(--u));
+  max-width: none;
+}
+
+/* Intro origin = design point (518, 305) */
+.intro {
+  position: absolute;
+  left: calc(427 * var(--u));
+  top: calc(113 * var(--u));
+}
+
+.title {
+  display: flex;
+  align-items: flex-start;
+  margin: 0;
+  font-size: calc(64 * var(--u));
+  font-weight: 400;
+  line-height: calc(87 * var(--u));
+  white-space: nowrap;
+}
+
+.hello { display: block; width: calc(136.08 * var(--u)); }
+
+.bang {
+  display: block;
+  position: relative;
+  top: calc(-5.115 * var(--u));
+  width: calc(76.459 * var(--u));
+  height: calc(90.885 * var(--u));
+  overflow: hidden;
+}
+/* The PNG's alpha is the shape; #tint-orange fills it with --orange */
+.bang img {
+  position: absolute;
+  left: calc(20.918 * var(--u));
+  top: calc(-2.885 * var(--u));
+  width: calc(59.869 * var(--u));
+  height: calc(88 * var(--u));
+  filter: url(#tint-orange);
+}
+
+.name { display: block; margin-left: calc(8.46 * var(--u)); }
+
+.subtitle {
+  position: absolute;
+  left: 0;
+  top: calc(102 * var(--u));
+  width: calc(443 * var(--u));
+  margin: 0;
+  font-size: calc(24 * var(--u));
+  line-height: normal;
+  color: var(--ink-soft);
+}
+
+
+/* ---------- Phones & portrait screens: stack the layout ---------- */
+
+@media (max-width: 700px), (max-aspect-ratio: 4/5) {
+  :root {
+    --u: min(100vw / 500, 100svh / 1060);
+    --cu: calc(var(--u) * .6);
+  }
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: calc(230 * var(--cu)) 16px calc(300 * var(--cu));
+  }
+
+  .nav {
+    position: relative;
+    top: auto;
+    left: auto;
+    gap: calc(44 * var(--u));
+  }
+
+  .hero {
+    position: relative;
+    left: auto;
+    top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: calc(40 * var(--u));
+  }
+
+  .intro {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: calc(444 * var(--u));
+    height: calc(190 * var(--u));
+    margin-top: calc(44 * var(--u));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .piece, .nav-btn, .nav-btn::after { transition-duration: .01ms !important; }
+}
+
+/* =========================================================
+   Scroll sections: About, Projects, Contact
+   Mobile-first; the desktop block matches the cover's breakpoint.
+   ========================================================= */
+
+@font-face {
+  font-family: "More Sugar";
+  src: url("assets/fonts/MoreSugar-Regular.woff") format("woff");
+  font-display: swap;
+}
+
+:root {
+  --green: #87aa1b;
+  --pink: #f58673;
+  --yellow: #ffc205;
+  --blue: #60bde7;
+}
+
+body { overflow-x: clip; }
+
+/* ---------- About: sun + rays, driven by --p (0 → 1) from script.js ---------- */
+
+.about {
+  --p: 0;
+  position: relative;
+  height: 210svh; /* 100svh pinned stage + 110svh of scroll to play the animation */
+  container-type: inline-size;
+}
+
+/* "About" nav target: the point where the animation has finished */
+.about-anchor { position: absolute; left: 0; bottom: 100svh; }
+
+.about-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* Design canvas: 1280 × 1100 on phones (extra room for the text), 1280 × 895 on desktop.
+   --a = one design pixel. */
+.sun-canvas {
+  --a: min(100cqw / 620, 100svh / 1150);
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: calc(1280 * var(--a));
+  height: calc(1100 * var(--a));
+  translate: -50% 0;
+}
+
+/* The sun rises out of the bottom of the screen and swells to full size.
+   --e is an ease-out of the first half of the scroll. */
+/* Solid orange sun: rises out of the bottom of the screen and swells to full size */
+/* The sun inflates like a bubble: script.js sets --ty (rise), --sx and --sy (wobbly stretch) */
+.sun {
+  position: absolute;
+  left: calc(-4 * var(--a));
+  top: calc(235 * var(--a));
+  width: calc(1288 * var(--a));
+  height: calc(1288 * var(--a));
+  max-width: none;
+  transform: translateY(calc(var(--ty, 0) * var(--a))) scale(var(--sx, 1), var(--sy, 1));
+  will-change: transform;
+}
+
+.about-content {
+  --t: clamp(0, (var(--p) - 0.72) / 0.2, 1);
+  position: absolute;
+  inset: 0;
+  opacity: var(--t);
+  transform: translateY(calc((1 - var(--t)) * 40 * var(--a)));
+}
+.about-content > * { position: absolute; margin: 0; }
+
+/* Title: an SVG the size of the sun canvas (viewBox in design units); the text runs along
+   an arc that shares the sun's centre, so it is centred and follows the sun's curve. */
+.about-title {
+  left: 0;
+  top: 0;
+  width: calc(1280 * var(--a));
+  height: calc(895 * var(--a));
+}
+.about-title svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.about-title text {
+  font-family: "More Sugar", "Fraunces", cursive;
+  font-size: 64px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  fill: #fff;
+}
+
+.about-illustration {
+  left: calc(534.71 * var(--a));
+  top: calc(401.79 * var(--a));
+  width: calc(219.81 * var(--a));
+  height: calc(194.87 * var(--a));
+  overflow: hidden;
+}
+.about-illustration img {
+  position: absolute;
+  left: calc(-39.713 * var(--a));
+  top: calc(-38.789 * var(--a));
+  width: calc(290 * var(--a));
+  height: calc(286.31 * var(--a));
+  max-width: none;
+  filter: url(#tint-white);
+}
+
+/* White on the orange sun only passes contrast as large text, so phones get 19px bold. */
+.about-text {
+  left: calc(640 * var(--a));
+  top: calc(620 * var(--a));
+  width: min(calc(612 * var(--a)), 100cqw - 40px);
+  translate: -50% 0;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #fff;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+/* ---------- Skills strip: scrolls sideways on its own ---------- */
+
+.skills-strip {
+  position: relative;
+  z-index: 1;
+  background: var(--cream);
+  border-block: 10px solid var(--yellow);
+}
+.skills-strip::after { /* cream gap + thin second stripe */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -22px;
+  height: 12px;
+  background: linear-gradient(var(--cream) 0 6px, var(--yellow) 6px 12px);
+}
+
+.skills-track {
+  display: flex;
+  width: max-content;
+  animation: skills-scroll 45s linear infinite;
+}
+.skills-strip { overflow-x: clip; }
+.skills-list {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 64px;
+  margin: 0;
+  padding: 0 8px;
+  list-style: none;
+  font-size: 18px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.skills-star img { display: block; width: 24px; height: 24px; }
+@keyframes skills-scroll { to { transform: translateX(-50%); } } /* one full copy of the list */
+
+/* ---------- Projects: heading + cards ---------- */
+
+.projects-inner {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 64px 16px 0;
+}
+
+/* Heading collage, design origin (29, 1032) */
+.projects-heading {
+  position: relative;
+  width: 365px;
+  height: 121px;
+  margin: 8px 0 -6px; /* scaled to .82 on phones, so the box is shorter than it looks */
+  scale: .82;
+  transform-origin: left top;
+}
+.projects-heading img { position: absolute; display: block; max-width: none; }
+.ph-text  { left: 44.37px; top: 35.71px; width: 247px; height: 65px; }
+.ph-blue  { left: 1px; top: 0; width: 58px; height: 58px; rotate: -90deg; scale: 1 -1; }
+.ph-green { left: 0; top: 67px; width: 30px; height: 30px; rotate: 90deg; }
+.ph-pink  { left: 248px; top: 4px; width: 53.5px; height: 179.5px; rotate: 90deg; }
+
+.projects { padding-top: 12px; scroll-margin-top: 0; } /* room for the stripe under the skills strip */
+
+/* Looping carousel. script.js sets each card's transform; --cs scales it to fit the screen. */
+.carousel {
+  --cs: 1;
+  position: relative;
+  padding-bottom: 20px;
+  outline: none;
+}
+/* No focus outlines anywhere on the carousel or its dots */
+.carousel, .carousel:focus, .carousel:focus-visible { outline: none; }
+
+.carousel-viewport {
+  position: relative;
+  height: calc(574px * var(--cs)); /* card (530) + headroom for the Top pick sticker + tilt and shadow */
+  overflow: hidden;
+  touch-action: pan-y; /* vertical swipes scroll the page, sideways swipes move the carousel */
+  cursor: default; /* the grab hand only shows while actually dragging */
+  user-select: none;
+}
+.carousel-viewport.is-dragging,
+.carousel-viewport.is-dragging * { cursor: grabbing !important; }
+.cards > .card { cursor: pointer; } /* every card is clickable: current opens it, others slide to it */
+
+.cards {
+  position: absolute;
+  inset: 0;
+  scale: var(--cs);
+  transform-origin: left top;
+}
+
+/* Every card sits at the top-left; script.js slides, scales and tilts it into place.
+   Scaling is centred on the image (202.5px, 124px) so thumbnails line up with the big image.
+   The springy curve overshoots a touch, so cards bounce into place. */
+.cards > .card {
+  position: absolute;
+  left: 0;
+  top: 24px; /* headroom for the Top pick sticker */
+  transform-origin: 202.5px 124px;
+  transition:
+    transform .42s cubic-bezier(.34, 1.45, .64, 1),
+    translate .3s var(--ease-pop),
+    box-shadow .25s ease,
+    background-color .25s ease;
+}
+.card img { -webkit-user-drag: none; }
+
+/* Not the current project: just a small tilted photo, no card, no text */
+.cards > .card:not(.is-active) {
+  background-color: transparent;
+  box-shadow: none;
+  cursor: pointer;
+}
+.cards > .card:not(.is-active) > :not(.card-img, .fav-badge) { opacity: 0; }
+
+/* Favourite projects: a tilted "Top pick" sticker on the corner (stays on the thumbnails too) */
+.fav-badge {
+  position: absolute;
+  z-index: 1;
+  top: -14px;
+  right: -12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px 5px 6px;
+  border-radius: 99px;
+  border: 3px solid var(--yellow);
+  background: var(--cream);
+  box-shadow: 1px 3px 0 rgba(0, 0, 0, .18);
+  rotate: 8deg;
+  font-family: "More Sugar", "Fraunces", cursive;
+  font-size: 17px;
+  line-height: 1;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.fav-badge img { width: 24px; height: 24px; }
+.cards > .card:not(.is-active) .fav-badge { scale: 1.15; } /* readable when the card is shrunk */
+.cards > .card:not(.is-active):hover { translate: 0 -14px; } /* lift, like the tetris pieces */
+.card > :not(.card-img) { transition: opacity .2s ease, filter .45s ease; }
+
+/* Card: 405 × 530, rounded, roomy padding; everything shares one 24px left edge.
+   Room for two rows of tags and an 8-line description. */
+.card {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  width: 405px;
+  height: 530px;
+  padding: 24px;
+  border-radius: 26px;
+  background: #fff0c2; /* soft tint of the palette yellow */
+  box-shadow: 2px 4px 2px rgba(0, 0, 0, .25);
+}
+.card > * { flex: none; }
+
+.card-img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  border-radius: 16px;
+  object-fit: cover;
+  transition: filter .45s ease;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tag {
+  height: 26px;
+  padding: 0 8px;
+  border: 2.5px solid;
+  border-radius: 9px;
+  background: var(--cream);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 21px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.tag--green  { border-color: var(--green); }
+.tag--pink   { border-color: var(--pink); }
+.tag--yellow { border-color: var(--yellow); }
+.tag--blue   { border-color: var(--blue); }
+.tag--orange { border-color: var(--orange); }
+
+.card-title {
+  margin: 10px 0 0;
+  font-family: "More Sugar", "Fraunces", cursive;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+}
+.card-text {
+  display: -webkit-box;
+  margin: 6px 0 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 8;
+  font-size: 14px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--ink-soft);
+}
+
+/* Dots: a confetti row in the site's palette; the current project is the yellow star
+   from the filter bar, spinning while autoplay counts down. */
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 10px auto 0;
+}
+.carousel-dot {
+  --c: var(--ink-soft);
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.carousel-dot::before { /* little coloured blob, each with its own tilt */
+  content: "";
+  width: 11px;
+  height: 11px;
+  border-radius: 4px 6px 5px 6px;
+  background: var(--c);
+  rotate: var(--tilt, 0deg);
+  transition: scale .35s var(--ease-pop), translate .3s var(--ease-pop);
+}
+.carousel-dot:hover::before { translate: 0 -3px; }
+.carousel-dot[aria-current="true"]::before { scale: 0; }
+.carousel-dot[aria-current="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 28px;
+  height: 28px;
+  background: url("assets/star.png") no-repeat center / contain;
+  animation: star-pop .45s var(--ease-pop) both;
+}
+.carousel.is-autoplay .carousel-dot[aria-current="true"]::after {
+  animation: star-pop .45s var(--ease-pop) both, star-spin var(--autoplay, 2s) linear .2s both;
+}
+.carousel.is-paused .carousel-dot[aria-current="true"]::after { animation-play-state: running, paused; }
+@keyframes star-pop { from { scale: 0; } to { scale: 1; } }
+@keyframes star-spin { from { rotate: 0deg; } to { rotate: 180deg; } }
+.carousel-dot:focus, .carousel-dot:focus-visible { outline: none; }
+
+/* Pause / play, drawn as a little rounded tile */
+.carousel-toggle {
+  position: relative;
+  width: 26px;
+  height: 22px;
+  margin-left: 10px;
+  padding: 0;
+  border: 2px solid var(--ink-soft);
+  border-radius: 7px;
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: translate .3s var(--ease-pop);
+}
+.carousel-toggle:hover { translate: 0 -2px; }
+.carousel-toggle::before { /* pause: two bars */
+  content: "";
+  position: absolute;
+  left: 7.5px;
+  top: 5px;
+  width: 2.5px;
+  height: 8px;
+  border-radius: 1px;
+  background: var(--ink-soft);
+  box-shadow: 4.5px 0 0 var(--ink-soft);
+}
+.carousel-toggle[data-state="paused"]::before { /* play: triangle */
+  left: 8.5px;
+  width: 0;
+  height: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  border-block: 4.5px solid transparent;
+  border-left: 7px solid var(--ink-soft);
+}
+.carousel-toggle:focus, .carousel-toggle:focus-visible { outline: none; }
+
+/* ---------- Contact ---------- */
+
+.contact {
+  container-type: inline-size;
+  padding-top: 90px;
+}
+
+.contact-canvas {
+  --k: min(1px, 100cqw / 1280); /* one design pixel (desktop), capped like the cards */
+  --ik: .5px;                /* icon unit on phones */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.contact-title { margin: 0; width: 220px; }
+.contact-title img { display: block; width: 100%; height: auto; }
+
+.contact-illustration {
+  position: relative;
+  order: 3;
+  width: 100%;
+  aspect-ratio: 1135 / 383;
+  overflow: hidden;
+}
+.contact-illustration img {
+  position: absolute;
+  left: 0;
+  top: -47.781%; /* 183 / 383: the design crops the top of the drawing */
+  width: 100%;
+  height: auto;
+  max-width: none;
+  filter: url(#tint-green);
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.contact-links a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: color .2s ease;
+}
+.contact-links a[href]:hover { color: var(--ink); }
+.contact-links a:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; }
+.cl-email .cl-text { text-decoration: underline; text-underline-position: from-font; }
+
+.cl-icon { position: relative; flex: none; overflow: hidden; }
+.cl-icon img { position: absolute; left: 0; top: 0; max-width: none; filter: url(#tint-grey); }
+.cl-email .cl-icon     { width: calc(83 * var(--ik)); height: calc(77 * var(--ik)); }
+.cl-email .cl-icon img { width: calc(83 * var(--ik)); height: calc(83 * var(--ik)); }
+.cl-cv .cl-icon        { width: calc(70 * var(--ik)); height: calc(86 * var(--ik)); }
+.cl-cv .cl-icon img    { width: calc(70 * var(--ik)); height: calc(86 * var(--ik)); }
+.cl-linkedin .cl-icon  { width: calc(82 * var(--ik)); height: calc(74 * var(--ik)); }
+.cl-linkedin .cl-icon img {
+  left: calc(-14 * var(--ik));
+  top: calc(-7 * var(--ik));
+  width: calc(112 * var(--ik));
+  height: calc(81 * var(--ik));
+}
+
+/* ---------- Desktop / landscape: match the Figma layout ---------- */
+
+@media (min-width: 701px) and (min-aspect-ratio: 4/5) {
+  .sun-canvas {
+    --a: min(100cqw / 1280, 100svh / 895);
+    height: calc(895 * var(--a));
+  }
+  .about-text {
+    top: calc(641 * var(--a));
+    width: calc(612 * var(--a));
+    font-size: calc(24 * var(--a));
+    font-weight: 600;
+    line-height: 1.24;
+  }
+
+  .skills-list { gap: 22px; height: 80px; padding: 0 11px; font-size: 24px; }
+  .skills-star img { width: 35px; height: 35px; }
+
+  .projects-inner { padding: 104px 13px 0; }
+  .projects-heading { margin: 0 0 4px 16px; scale: 1; }
+
+  /* Contact: design canvas from y = 2380 to 2816, positioned like Figma */
+  .contact { padding-top: 149px; }
+  .contact-canvas {
+    display: block;
+    position: relative;
+    width: calc(1280 * var(--k));
+    height: calc(436 * var(--k));
+    margin: 0 auto;
+  }
+  .contact-canvas > * { position: absolute; }
+  .contact-title { left: calc(500.615 * var(--k)); top: calc(27.42 * var(--k)); width: calc(276 * var(--k)); }
+  .contact-illustration { left: calc(73 * var(--k)); top: calc(53 * var(--k)); width: calc(1135 * var(--k)); }
+  .contact-canvas { --ik: calc(var(--k) * .8); }
+  .contact-links {
+    left: 0;
+    right: 0;
+    top: calc(185 * var(--k));
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: calc(14 * var(--k)) calc(48 * var(--k));
+  }
+  .cl-email { flex-basis: 100%; display: flex; justify-content: center; }
+  .contact-links a { gap: calc(12 * var(--k)); font-size: calc(24 * var(--k)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-track, .scroll-cue-arrow { animation: none; }
+  .skills-strip { overflow-x: auto; }
+  .cards > .card, .card > *, .carousel-dot::before, .carousel-toggle { transition-duration: .01ms !important; }
+}
+
+/* =========================================================
+   Project detail: "View project" button, slide-up panel, project page
+   ========================================================= */
+
+.card-open {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 6px 14px;
+  border: 2.5px solid var(--ink-soft);
+  border-radius: 99px;
+  background: var(--cream);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color .2s ease, color .2s ease, translate .3s var(--ease-pop);
+}
+.card-open:hover { background: var(--ink-soft); color: var(--cream); translate: 0 -2px; }
+.card-open:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.cards > .card[data-project].is-active { cursor: pointer; }
+.cards > .card:not(.is-active) .card-open { pointer-events: none; }
+
+/* --- Slide-up panel. Narrower than the screen, so the blurred page shows around it. */
+.project-panel {
+  position: fixed;
+  inset: auto 0 0 0;
+  width: min(900px, 100%);
+  max-width: none;
+  height: calc(100svh - 32px);
+  max-height: none;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0; /* square, so the scrollbar runs cleanly up to the top */
+  background: var(--cream);
+  color: var(--ink);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, .18);
+  overflow: hidden;
+}
+.project-panel[open] { animation: panel-up .6s cubic-bezier(.22, 1, .36, 1); }
+.project-panel.is-closing { animation: panel-down .35s cubic-bezier(.5, 0, .75, 0) forwards; }
+.project-panel::backdrop {
+  background: rgba(60, 40, 10, .22);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  animation: backdrop-in .4s ease both;
+}
+.project-panel.is-closing::backdrop { animation: backdrop-out .35s ease both; }
+@keyframes panel-up { from { transform: translateY(100%); } }
+@keyframes panel-down { to { transform: translateY(100%); } }
+@keyframes backdrop-in { from { opacity: 0; } }
+@keyframes backdrop-out { to { opacity: 0; } }
+html.panel-open { overflow: hidden; }
+
+.panel-scroll {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.panel-bar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px 12px 24px;
+  background: var(--cream);
+  border-bottom: 3px solid var(--yellow);
+}
+.panel-title {
+  margin: 0;
+  font-family: "More Sugar", "Fraunces", cursive;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.panel-close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 2.5px solid var(--ink-soft);
+  border-radius: 50%;
+  background: var(--cream);
+  font-size: 26px;
+  line-height: 1;
+  color: var(--ink-soft);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color .2s ease, color .2s ease, rotate .3s var(--ease-pop);
+}
+.panel-close:hover { background: var(--ink-soft); color: var(--cream); rotate: 90deg; }
+.panel-close:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+.panel-inner { padding: 24px 0 48px; }
+
+/* --- Video: a thumbnail with a play button; the YouTube player loads on click */
+.video-lite {
+  position: relative;
+  margin: 0 24px 28px;
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #1c1c1c;
+  box-shadow: 2px 4px 2px rgba(0, 0, 0, .25);
+}
+.video-lite img,
+.video-lite iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}
+.video-play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: rgba(0, 0, 0, .12);
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+.video-play span {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+  transition: scale .3s var(--ease-pop);
+}
+.video-play span::before { /* play triangle */
+  content: "";
+  margin-left: 6px;
+  border-block: 15px solid transparent;
+  border-left: 24px solid #fff;
+}
+.video-play:hover { background: rgba(0, 0, 0, 0); }
+.video-play:hover span { scale: 1.1; }
+.video-play:focus-visible span { outline: 3px solid #fff; outline-offset: 4px; }
+
+/* --- The design board (exported from Figma, sliced so it loads in pieces) */
+.board img { display: block; width: 100%; height: auto; }
+
+/* --- Links with a preview of where they lead */
+.panel-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding: 40px 24px 0;
+}
+.preview-link {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px 14px 18px;
+  border: 3px solid var(--yellow);
+  border-radius: 24px;
+  background: #fff0c2;
+  color: var(--ink-soft);
+  text-decoration: none;
+  box-shadow: 2px 4px 2px rgba(0, 0, 0, .2);
+  touch-action: manipulation;
+  transition: translate .35s var(--ease-pop), box-shadow .35s ease;
+}
+.preview-img {
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+.preview-img img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: translate 1.6s ease;
+}
+.preview-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: "More Sugar", "Fraunces", cursive;
+  font-size: 22px;
+}
+.preview-meta { flex: none; font-family: "Fraunces", Georgia, serif; font-size: 14px; white-space: nowrap; }
+.preview-link:hover { translate: 0 -4px; box-shadow: 3px 8px 4px rgba(0, 0, 0, .18); }
+.preview-link:hover .preview-img img { translate: 0 -18%; } /* scrolls the preview to hint at more */
+.preview-link:focus-visible { outline: 3px solid var(--orange); outline-offset: 4px; }
+
+@media (min-width: 640px) {
+  .panel-links { grid-template-columns: 1fr 1fr; padding-inline: 32px; }
+  .video-lite { margin-inline: 32px; }
+}
+
+/* --- Full project page (cardclutch.html) */
+.project-page { max-width: 900px; margin: 0 auto; }
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px 16px;
+  border-bottom: 3px solid var(--yellow);
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 2.5px solid var(--ink-soft);
+  border-radius: 99px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: background-color .2s ease, color .2s ease;
+}
+.back-link:hover { background: var(--ink-soft); color: var(--cream); }
+.back-link:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.project-page .panel-title { font-size: clamp(28px, 6vw, 44px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .project-panel[open], .project-panel.is-closing, .project-panel::backdrop { animation: none; }
+  .preview-link, .preview-img img, .card-open, .panel-close { transition: none; }
+}
+
+/* Big in-page video (e.g. Santa's Stuck demo) between board sections */
+.video-big {
+  padding: 32px 24px;
+  background: #1f3d2b; /* deep Christmas green from the Santa boards */
+}
+.video-big video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  background: #000;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+}
+@media (min-width: 640px) { .video-big { padding: 40px 32px; } }
+
+/* No stray focus line or blinking text cursor in the project panel when opened with the mouse.
+   Keyboard users still get the orange focus ring on the buttons (:focus-visible). */
+.project-panel,
+.project-panel * { caret-color: transparent; }
+.project-panel:focus,
+.panel-scroll:focus,
+.panel-title:focus { outline: none; }
+.panel-close:focus:not(:focus-visible) { outline: none; }
+
+/* --- Board with real "Find Out More" buttons laid exactly over the drawn ones.
+   Positions are % of the 842 × 2230 Figma frame; sizes scale with the board's width. */
+.board--links {
+  position: relative;
+  container-type: inline-size;
+}
+.find-more {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  width: calc(148 / 842 * 100cqw);
+  height: calc(35 / 842 * 100cqw);
+  border-radius: 99px;
+  background: #ef9562;
+  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+  font-size: calc(13 / 842 * 100cqw);
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: translate .3s var(--ease-pop), background-color .2s ease, box-shadow .3s ease;
+}
+.find-more span { font-size: 1.35em; line-height: 1; }
+.find-more:hover {
+  translate: 0 -3px;
+  background: #e5763c;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .18);
+}
+.find-more:focus-visible { outline: 3px solid var(--ink-soft); outline-offset: 3px; }
+
+/* One preview card on its own, centred */
+.panel-links--single { grid-template-columns: minmax(0, 420px) !important; justify-content: center; }
+
+/* --- Full process page: slides stacked with a small gap */
+.project-page--wide { max-width: 1100px; }
+.process-slides {
+  display: grid;
+  gap: 20px;
+  padding: 24px 16px 8px;
+}
+.process-slide {
+  scroll-margin-top: 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, .15);
+}
+.process-slide img { display: block; width: 100%; height: auto; }
+@media (min-width: 640px) { .process-slides { gap: 28px; padding-inline: 32px; } }
+@media (prefers-reduced-motion: reduce) { .find-more { transition: none; } }
+
+/* Process page: header stays at the top, plus a "back to the start" button once you scroll */
+.project-page--wide .project-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--cream);
+}
+.process-slide { scroll-margin-top: 96px; }
+.back-to-start {
+  position: fixed;
+  right: max(16px, calc((100vw - 1100px) / 2 + 16px));
+  bottom: 20px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 2.5px solid var(--ink-soft);
+  border-radius: 99px;
+  background: var(--cream);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+  opacity: 0;
+  translate: 0 12px;
+  pointer-events: none;
+  transition: opacity .25s ease, translate .3s var(--ease-pop), background-color .2s ease, color .2s ease;
+}
+.back-to-start.is-visible { opacity: 1; translate: 0 0; pointer-events: auto; }
+.back-to-start:hover { background: var(--ink-soft); color: var(--cream); }
+.back-to-start:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .back-to-start { transition: none; } }
+
+/* Long single board on a project page: rounded frame with a soft shadow */
+.board--framed {
+  margin: 0 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, .15);
+}
+@media (min-width: 640px) { .board--framed { margin-inline: 32px; } }
+
+/* "Discover The Research" buttons over the aircraft seat board (1190 × 2654 Figma frame) */
+.discover-btn {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  width: calc(295 / 1190 * 100cqw);
+  height: calc(65 / 1190 * 100cqw);
+  border: max(1px, calc(1 / 1190 * 100cqw)) solid #1f3a4d;
+  border-radius: 99px;
+  background: #536878;
+  font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
+  font-size: calc(19 / 1190 * 100cqw);
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: translate .3s var(--ease-pop), background-color .2s ease, box-shadow .3s ease;
+}
+.discover-btn span { font-size: 1.4em; line-height: 1; }
+.discover-btn:hover {
+  translate: 0 -3px;
+  background: #43586a;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .2);
+}
+.discover-btn:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .discover-btn { transition: none; } }
+
+/* Landscape previews (e.g. Tilt Quest PDF covers) fill the preview box instead of leaving a gap */
+.preview-img--fill img { height: 100%; object-fit: cover; }
+.preview-link:hover .preview-img--fill img { translate: none; scale: 1.05; }
+.preview-img--fill img { transition: scale .6s ease; }

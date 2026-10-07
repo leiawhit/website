@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aircraft Seat: Group Research — Leia</title>
+  <meta name="description" content="Group research for a sustainable economy-class aircraft seat: market research, stakeholders, user experience, material waste, manufacturing, benchmarks, teardown, Eco Audit and How Might We questions.">
+  <meta name="theme-color" content="#fff8e7">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,0,1;9..144,600,0,1;9..144,700,0,1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261007141306">
+</head>
+<body>
+  <div class="project-page project-page--wide">
+    <header class="project-header">
+      <a class="back-link" href="index.html#open=aircraft-seat"><span aria-hidden="true">←</span> Project overview</a>
+      <h1 class="panel-title">Aircraft Seat: Group Research</h1>
+    </header>
+
+    <main class="process-slides">
+      <section class="process-slide" aria-label="Market Research">
+        <img src="assets/projects/aircraft-seat/group-01.webp" width="1684" height="1192" alt="Market research: the problem, goal and focus of the design research, aircraft seating market trends, the three pillars of sustainability, market innovations in sustainability and the design scope of long-haul wide-body seats." decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Stakeholders">
+        <img src="assets/projects/aircraft-seat/group-02.webp" width="1684" height="1235" alt="Stakeholders: influence and interest in aircraft seat design, selling points to each, why stakeholders are more sustainably inclined, and opportunities." decoding="async">
+      </section>
+      <section class="process-slide" aria-label="User Experience">
+        <img src="assets/projects/aircraft-seat/group-03.webp" width="1684" height="1192" alt="User experience: why passenger experience drives loyalty, an experience map of a flight, key comfort factors, in-seat entertainment and passenger perceptions of sustainability." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Material Waste">
+        <img src="assets/projects/aircraft-seat/group-04.webp" width="1684" height="1192" alt="Material waste: analysing waste and inefficiency in the seat’s use phase, the environmental impact of cleaning and maintenance, cost over the seat’s life, and routine cleaning at turnaround." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Manufacturing and End-Of-Life">
+        <img src="assets/projects/aircraft-seat/group-05.webp" width="1684" height="1192" alt="Manufacturing and end of life: causes of slow seat production, sustainable manufacturing methods, key factors affecting recycling and real-world solutions." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Market Benchmarks">
+        <img src="assets/projects/aircraft-seat/group-06.webp" width="1684" height="1192" alt="Market benchmarks: the Safran Z400, DOY Ultra Slim Low Carbon Seat and McLaren Racing Seat, with features, pain points and insights." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Teardown">
+        <img src="assets/projects/aircraft-seat/group-07.webp" width="1684" height="1192" alt="Teardown of an economy seat, mapping each disassembly step, fastener types and pain points such as tight-fit frames, unexpected pins and contaminant accumulation." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Eco Audit">
+        <img src="assets/projects/aircraft-seat/group-08.webp" width="1684" height="1220" alt="Eco Audit of DOY’s Ultra-Slim seat: assumptions and limitations, how recyclability can reduce embodied energy, and comparing embodied energy with the teardown design." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Doy Seat Materials">
+        <img src="assets/projects/aircraft-seat/group-09.webp" width="1684" height="1220" alt="Doy seat materials: material weight distribution, embodied energy per kilogram, end-of-life potential and an aluminium circularity flow chart." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="HMW page">
+        <img src="assets/projects/aircraft-seat/group-10.webp" width="1684" height="1192" alt="How Might We page: translating insights from each research page into How Might We questions to guide design research." loading="lazy" decoding="async">
+      </section>
+    </main>
+
+  </div>
+
+  <a class="back-to-start" href="#top"><span aria-hidden="true">↑</span> Back to the start</a>
+  <script>
+    // Show "Back to the start" once you've scrolled a screen down
+    const backBtn = document.querySelector('.back-to-start');
+    const onScroll = () => backBtn.classList.toggle('is-visible', scrollY > innerHeight);
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+    });
+  </script>
+</body>
+</html>

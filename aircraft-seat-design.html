@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aircraft Seat: Individual Design — Leia</title>
+  <meta name="description" content="Individual design for a sustainable economy-class aircraft seat comfort system: problem identification, research, stakeholder and journey mapping, requirements, ideation, final concept, system map and evaluation.">
+  <meta name="theme-color" content="#fff8e7">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,0,1;9..144,600,0,1;9..144,700,0,1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261007141306">
+</head>
+<body>
+  <div class="project-page project-page--wide">
+    <header class="project-header">
+      <a class="back-link" href="index.html#open=aircraft-seat"><span aria-hidden="true">←</span> Project overview</a>
+      <h1 class="panel-title">Aircraft Seat: Individual Design</h1>
+    </header>
+
+    <main class="process-slides">
+      <section class="process-slide" aria-label="Problem Identification">
+        <img src="assets/projects/aircraft-seat/individual-01.webp" width="1684" height="1192" alt="Problem identification: branding, operational staff and maintenance, recycling, comfort, market shifts, and safety and certification constraints." decoding="async">
+      </section>
+      <section class="process-slide" aria-label="HMW Driven Research">
+        <img src="assets/projects/aircraft-seat/individual-02.webp" width="1684" height="1192" alt="HMW driven research into circularity, a distinctive passenger experience, thermal comfort and seat comfort, including in-seat heating and cooling." decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Stakeholder Map and Journey Map">
+        <img src="assets/projects/aircraft-seat/individual-03.webp" width="1684" height="1192" alt="Stakeholder map across production, use and end of life, and a journey map for the persona Cold Carol." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Requirements">
+        <img src="assets/projects/aircraft-seat/individual-04.webp" width="1684" height="1192" alt="Requirements from insights, PU foam alternatives and a Pugh matrix comparing gel pads, fibre batting, spring systems, thermoplastic elastomer lattice and woven suspension fabrics." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Suspension Frame Ideation">
+        <img src="assets/projects/aircraft-seat/individual-05.webp" width="1684" height="1192" alt="Suspension frame ideation: three concepts with aluminium frames, C-clips, quarter-turn fasteners and flexible lumbar elements, ranked against requirements." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Final Concept">
+        <img src="assets/projects/aircraft-seat/individual-06.webp" width="1684" height="1192" alt="Final concept: a low-bulk, mono-material PET comfort stack with micro-fans, heating film and lumbar support that clips onto existing seat frames with steel C-spring clips." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="System Map">
+        <img src="assets/projects/aircraft-seat/individual-07.webp" width="1684" height="1192" alt="System map from material sourcing through manufacture, assembly, storage, distribution and use to buy-back, PET, metal and electrical recycling." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Future Failure Scenarios">
+        <img src="assets/projects/aircraft-seat/individual-08.webp" width="1684" height="1192" alt="Future failure scenarios, how the design responds, and limitations and next steps." loading="lazy" decoding="async">
+      </section>
+      <section class="process-slide" aria-label="Feature Evaluation">
+        <img src="assets/projects/aircraft-seat/individual-09.webp" width="1684" height="1192" alt="Feature evaluation of value, limitations and design considerations, with social, environmental and economical evaluations." loading="lazy" decoding="async">
+      </section>
+    </main>
+
+  </div>
+
+  <a class="back-to-start" href="#top"><span aria-hidden="true">↑</span> Back to the start</a>
+  <script>
+    // Show "Back to the start" once you've scrolled a screen down
+    const backBtn = document.querySelector('.back-to-start');
+    const onScroll = () => backBtn.classList.toggle('is-visible', scrollY > innerHeight);
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+    });
+  </script>
+</body>
+</html>

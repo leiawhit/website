@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leia — Portfolio</title>
+  <meta name="description" content="Leia, 3rd year Design Engineering student at Imperial College London.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,0,1;9..144,600,0,1;9..144,700,0,1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+  <link rel="stylesheet" href="styles.css?v=20261007141306">
+</head>
+<body>
+  <!-- Inline so the photo clip and "!" colour work even when opened straight from disk -->
+  <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <clipPath id="photo-clip" clipPathUnits="objectBoundingBox">
+        <path transform="scale(0.0038022814 0.0041841004)" d="M74.7542 0H233C249.569 0 263 13.4315 263 30V209C263 225.569 249.569 239 233 239H68.1849C54.4154 239 42.4139 229.627 39.0784 216.267L30.7703 182.991C29.0942 176.278 25.1491 170.351 19.6032 166.213L12.0606 160.586C4.47079 154.923 0 146.01 0 136.541V132.808C0 124.985 3.05584 117.471 8.51606 111.869L36.2381 83.4252C41.6983 77.8229 44.7542 70.3093 44.7542 62.4862V30C44.7542 13.4315 58.1857 0 74.7542 0Z"/>
+      </clipPath>
+      <filter id="tint-orange" color-interpolation-filters="sRGB">
+        <feFlood flood-color="#ee6a05"/>
+        <feComposite in2="SourceAlpha" operator="in"/>
+      </filter>
+      <filter id="tint-white" color-interpolation-filters="sRGB">
+        <feFlood flood-color="#ffffff"/>
+        <feComposite in2="SourceAlpha" operator="in"/>
+      </filter>
+      <filter id="tint-green" color-interpolation-filters="sRGB">
+        <feFlood flood-color="#87aa1b"/>
+        <feComposite in2="SourceAlpha" operator="in"/>
+      </filter>
+      <filter id="tint-grey" color-interpolation-filters="sRGB">
+        <feFlood flood-color="#484848"/>
+        <feComposite in2="SourceAlpha" operator="in"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="page">
+
+    <!-- Corner tetris pieces -->
+    <div class="corners" aria-hidden="true">
+      <div class="piece" style="--l:33.64;--t:50.31;--w:158.355;--h:81.695;--tilt:-6deg">
+        <img src="assets/shape-yellow-tl.svg" alt="" style="--iw:81;--ih:158;--r:-90.25deg">
+      </div>
+      <div class="piece" style="--rt:36.636;--t:50;--w:127.764;--h:119.559;--tilt:6deg">
+        <img src="assets/shape-green-tr.svg" alt="" style="--iw:127.242;--ih:119;--r:179.75deg">
+      </div>
+      <div class="piece dot" style="--rt:76;--t:185;--w:37;--h:37">
+        <img src="assets/dot-pink.svg" alt="" style="--iw:37;--ih:37;--r:90deg">
+      </div>
+      <div class="piece" style="--rt:37;--b:166.5;--w:80;--h:119.5;--tilt:7deg">
+        <img src="assets/shape-blue-br.svg" alt="" style="--iw:80;--ih:119.5;--r:180deg;--sy:-1">
+      </div>
+      <div class="piece" style="--rt:37;--b:51;--w:95;--h:153;--tilt:5deg">
+        <img src="assets/shape-yellow-br.svg" alt="" style="--iw:95;--ih:153;--r:180deg;--sy:-1">
+      </div>
+      <div class="piece" style="--rt:139.649;--b:50.649;--w:80.351;--h:80.351;--tilt:-7deg">
+        <img src="assets/shape-pink-br.svg" alt="" style="--iw:80;--ih:80;--r:-0.25deg">
+      </div>
+      <div class="piece" style="--l:34.26;--b:50.02;--w:179.641;--h:117.98;--tilt:-5deg">
+        <img src="assets/shape-blue-bl.svg" alt="" style="--iw:179.641;--ih:117.981;--r:180deg;--sy:-1">
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Main">
+      <a class="nav-btn" href="#about">About</a>
+      <a class="nav-btn" href="#projects">Projects</a>
+      <a class="nav-btn" href="#contact">Contact</a>
+    </nav>
+
+    <!-- Scroll cue -->
+    <a class="scroll-cue" href="#about">
+      <span class="scroll-cue-text">Have a look</span>
+      <svg class="scroll-cue-arrow" viewBox="0 0 40 56" aria-hidden="true" focusable="false">
+        <path d="M20 4 C 17 16, 23 28, 20 46" />
+        <path d="M9 36 L 20 49 L 31 36" />
+      </svg>
+    </a>
+
+    <div class="hero">
+      <div class="cluster">
+        <div class="piece dot" style="--l:0;--t:0;--w:37.25;--h:37.25">
+          <img src="assets/dot-green.svg" alt="" style="--iw:37;--ih:37;--r:-90.39deg;--sy:-1">
+        </div>
+        <div class="piece" style="--l:19.05;--t:12.08;--w:155.749;--h:127.915;--tilt:-6deg">
+          <img src="assets/shape-pink-frame-top.svg" alt="" style="--iw:127;--ih:155;--r:89.66deg;--sy:-1">
+        </div>
+        <div class="photo">
+          <img src="assets/photo.png" alt="Leia presenting data charts on a whiteboard">
+        </div>
+        <div class="piece" style="--l:303;--t:12;--w:56;--h:110;--tilt:7deg">
+          <img src="assets/shape-yellow-frame.svg" alt="" style="--iw:110;--ih:56;--r:-90deg;--sy:-1">
+        </div>
+        <div class="piece" style="--l:49;--t:207.1;--w:69.228;--h:124.101;--tilt:-7deg">
+          <img src="assets/shape-blue-frame.svg" alt="" style="--iw:69.047;--ih:124;--r:-0.08deg">
+        </div>
+        <div class="piece" style="--l:95.96;--t:308.91;--w:79;--h:66;--tilt:6deg">
+          <img src="assets/shape-pink-frame.svg" alt="" style="--iw:66;--ih:79;--r:90deg">
+        </div>
+        <div class="piece" style="--l:276;--t:292;--w:83;--h:66;--tilt:-6deg">
+          <img src="assets/shape-green-frame.svg" alt="" style="--iw:66;--ih:83;--r:90deg;--sy:-1">
+        </div>
+      </div>
+
+      <div class="intro">
+        <h1 class="title">
+          <span class="hello">Hello</span><span class="bang" aria-hidden="true"><img src="assets/exclaim-mask.png" alt=""></span><span class="sr-only">!</span>
+          <span class="name">Im Leia,</span>
+        </h1>
+        <p class="subtitle">3rd year Design Engineering student at Imperial College London</p>
+      </div>
+    </div>
+
+  </div>
+  <main>
+    <!-- About: the sun rises and grows as you scroll (driven by --p in script.js) -->
+    <section class="about" aria-labelledby="about-title">
+      <span id="about" class="about-anchor"></span>
+      <div class="about-stage">
+        <div class="sun-canvas">
+          <img class="sun" src="assets/sun.svg" alt="">
+          <div class="about-content">
+            <!-- Title on an arc that shares the sun's centre (640, 879), so it is centred and parallel to the edge.
+                 viewBox = the sun canvas in design units. -->
+            <h2 id="about-title" class="about-title">
+              <span class="sr-only">About Me!</span>
+              <svg viewBox="0 0 1280 895" aria-hidden="true" focusable="false">
+                <path id="about-arc" d="M 140 879 A 500 500 0 0 1 1140 879" fill="none"/>
+                <text><textPath href="#about-arc" startOffset="50%" text-anchor="middle">About Me!</textPath></text>
+              </svg>
+            </h2>
+            <div class="about-illustration" aria-hidden="true"><img src="assets/about-illustration.png" alt=""></div>
+            <p class="about-text">I enjoy moving between creative thinking and technical problem solving, bringing together mechanical design, electronics and software to make ideas work. I put the user at the centre of my process, testing early and using feedback to learn from insights and shape solutions around people’s needs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills strip: scrolls sideways on its own (two copies of the list make the loop seamless) -->
+    <div class="skills-strip">
+      <div class="skills-track">
+        <ul class="skills-list" aria-label="Skills">
+          <li>Fusion 360</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Blender</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>User Research</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Python</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>MATLAB</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Figma</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>3D Printing</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Usability Testing</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>MicroPython</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>C++</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Laser Cutting</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Adobe CC</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Ideation</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Visual Storytelling</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>JavaScript</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+        </ul>
+        <ul class="skills-list" aria-hidden="true">
+          <li>Fusion 360</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Blender</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>User Research</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Python</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>MATLAB</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Figma</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>3D Printing</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Usability Testing</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>MicroPython</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>C++</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Laser Cutting</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Adobe CC</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Ideation</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>Visual Storytelling</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+          <li>JavaScript</li>
+          <li class="skills-star" aria-hidden="true"><img src="assets/star.png" alt="" width="35" height="35"></li>
+        </ul>
+      </div>
+    </div>
+
+    <section id="projects" class="projects" aria-labelledby="projects-title">
+      <div class="projects-inner">
+        <h2 id="projects-title" class="projects-heading">
+          <img class="ph-blue" src="assets/projects-blue.svg" alt="">
+          <img class="ph-green" src="assets/projects-green.svg" alt="">
+          <img class="ph-pink" src="assets/projects-pink.svg" alt="">
+          <img class="ph-text" src="assets/title-projects.svg" alt="Projects" width="247" height="65">
+        </h2>
+      </div>
+
+      <!-- Looping carousel: swipe / drag / trackpad / arrow keys. script.js positions the cards and builds the dots. -->
+      <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Projects" tabindex="0">
+        <div class="carousel-viewport">
+          <div class="cards">
+            <article class="card is-fav" data-project="cardclutch">
+              <span class="fav-badge"><img src="assets/star.png" alt="" width="35" height="35"><span>Top pick</span></span>
+              <img class="card-img" src="assets/CardClutch.png" alt="CardClutch, a guided card cutter for custom packaging" width="882" height="528" decoding="async">
+              <ul class="tags" aria-label="Skills">
+                <li class="tag tag--green">CAD</li>
+                <li class="tag tag--orange">Electronics</li>
+                <li class="tag tag--yellow">Human Centred Design</li>
+                <li class="tag tag--blue">Programming</li>
+                <li class="tag tag--pink">DFM</li>
+                <li class="tag tag--blue">Simulation</li>
+              </ul>
+              <h3 class="card-title">CardClutch</h3>
+              <p class="card-text">As a team, we designed CardClutch, a guided card cutter for creating custom packaging around irregular objects. We developed fully functional mechanical, electronic and software systems to combine measuring, box net generation and accurate cutting into one workflow.</p>
+              <button class="card-open" type="button" data-open="cardclutch">View project <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="card is-fav" data-project="santas-stuck">
+              <span class="fav-badge"><img src="assets/star.png" alt="" width="35" height="35"><span>Top pick</span></span>
+              <img class="card-img" src="assets/SantasStuck.png" alt="Santa’s Stuck!, an interactive toy of Santa stuck in a chimney" width="726" height="516" decoding="async">
+              <ul class="tags" aria-label="Skills">
+                <li class="tag tag--orange">Electronics</li>
+                <li class="tag tag--pink">Robotics</li>
+                <li class="tag tag--green">CAD</li>
+                <li class="tag tag--blue">Programming</li>
+                <li class="tag tag--yellow">Human Centred Design</li>
+              </ul>
+              <h3 class="card-title">Santa’s Stuck!</h3>
+              <p class="card-text">Designed a playful interactive toy where users experiment with Santa’s reactions to discover how to help him escape the chimney. I developed the physical mechanisms and interactive system using Bela, C++ and Pure Data, combining sensors, audio, lighting and movement to create responsive behaviour.</p>
+              <button class="card-open" type="button" data-open="santas-stuck">View project <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="card is-fav" data-project="behind-the-collection">
+              <span class="fav-badge"><img src="assets/star.png" alt="" width="35" height="35"><span>Top pick</span></span>
+              <img class="card-img" src="assets/BehindTheCollection.png" alt="Tool for making bespoke protective foam inserts for museum objects" width="302" height="258" decoding="async">
+              <ul class="tags" aria-label="Skills">
+                <li class="tag tag--green">CAD</li>
+                <li class="tag tag--yellow">Human Centred Design</li>
+                <li class="tag tag--pink">DFM</li>
+                <li class="tag tag--orange">Electronics</li>
+              </ul>
+              <h3 class="card-title">Behind the Collection</h3>
+              <p class="card-text">Explored the needs, workflows and challenges of GLAM organisations. Through stakeholder interviews, observation, market research and user journey mapping, I identified patterns and opportunities for improvement, translating these insights into a physical tool for creating bespoke protective foam inserts for irregular objects.</p>
+              <button class="card-open" type="button" data-open="behind-the-collection">View project <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="card">
+              <img class="card-img" src="assets/Labirynth.png" alt="Labyrinth, a hand-drawn maze strategy game" width="2560" height="1664" decoding="async">
+              <ul class="tags" aria-label="Skills">
+                <li class="tag tag--blue">Programming</li>
+              </ul>
+              <h3 class="card-title">Labyrinth</h3>
+              <p class="card-text">Developed a 2–4 player strategy game where players shift a 7×7 maze and collect matching hearts. Built the game engine in JavaScript with dynamic tile shifting and BFS pathfinding. Hand drew the interface and character animations to add storytelling and create an indie visual style.</p>
+            </article>
+            <article class="card" data-project="aerodynamic-suv">
+              <img class="card-img" src="assets/AerodynamicSUV.png" alt="CFD flow simulation around a simplified SUV body" width="1864" height="1276" decoding="async">
+              <ul class="tags" aria-label="Skills">
+                <li class="tag tag--green">CAD</li>
+                <li class="tag tag--blue">Simulation</li>
+              </ul>
+              <h3 class="card-title">Aerodynamic SUV</h3>
+              <p class="card-text">Designed and evaluated a simplified SUV geometry for real-world aerodynamic conditions, developing the CAD through benchmarking and iterative design. Using CFD, I analysed flow behaviour, drag and lift to identify key areas affecting aerodynamic performance. These findings were used to evaluate the baseline design and inform a future iteration.</p>
+              <button class="card-open" type="button" data-open="aerodynamic-suv">View project <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="card" data-project="aircraft-seat">
+              <img class="card-img" src="assets/AirlineSeatRedsign.png" alt="Redesigned economy class aircraft seat" width="1652" height="1344" decoding="async">
+              <ul class="tags" aria-label="Skills">
+                <li class="tag tag--yellow">Human Centred Design</li>
+                <li class="tag tag--green">Sustainability</li>
+              </ul>
+              <h3 class="card-title">Sustainable Aircraft Seat</h3>
+              <p class="card-text">Explored the lifecycle of economy class aircraft seating through user research, teardown analysis, market research and an Eco Audit. I developed a modular comfort system compatible with existing seat frames, combining pressure zoned support, active thermal comfort and tool light disassembly for improved circularity.</p>
+              <button class="card-open" type="button" data-open="aircraft-seat">View project <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="card" data-project="battery-cooling-plate">
+              <img class="card-img" src="assets/BatteryCoolingPlate.png" alt="CFD thermal simulation of a battery cooling plate" width="2570" height="2072" decoding="async">
+              <ul class="tags" aria-label="Skills">
+                <li class="tag tag--green">CAD</li>
+                <li class="tag tag--blue">Simulation</li>
+                <li class="tag tag--pink">DFM</li>
+              </ul>
+              <h3 class="card-title">Battery Cooling Plate</h3>
+              <p class="card-text">Designed and optimised a battery cooling plate for an electric vehicle fleet, balancing temperature uniformity, heat transfer, pressure drop and manufacturability. I developed and evaluated multiple channel geometries using CFD to analyse flow and thermal performance and inform each iteration.</p>
+              <button class="card-open" type="button" data-open="battery-cooling-plate">View project <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="card" data-project="tilt-quest">
+              <img class="card-img" src="assets/projects/tilt-quest/cover.webp" alt="Tilt Quest, a tilting musical table game played by several people" width="1200" height="883" decoding="async">
+              <ul class="tags" aria-label="Skills">
+                <li class="tag tag--green">CAD</li>
+                <li class="tag tag--yellow">Human Centred Design</li>
+              </ul>
+              <h3 class="card-title">Tilt Quest</h3>
+              <p class="card-text">Project exploring how urban spaces can help international newcomers overcome social and cultural barriers and develop a sense of belonging. Through research, co-design and prototyping, we developed a playful, non-verbal experience using shared play, music and cultural exchange to encourage spontaneous interaction.</p>
+              <button class="card-open" type="button" data-open="tilt-quest">View project <span aria-hidden="true">→</span></button>
+            </article>
+          </div>
+        </div>
+        <div class="carousel-dots" aria-label="Choose a project"></div>
+        <p class="sr-only carousel-status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section id="contact" class="contact" aria-labelledby="contact-title">
+      <div class="contact-canvas">
+        <h2 id="contact-title" class="contact-title"><img src="assets/title-contacts.svg" alt="Contacts" width="276" height="55"></h2>
+        <div class="contact-illustration" aria-hidden="true"><img src="assets/contact-illustration.png" alt="" loading="lazy"></div>
+        <ul class="contact-links">
+          <li class="cl-email"><a href="mailto:leia.whitaker@icloud.com"><span class="cl-icon" aria-hidden="true"><img src="assets/icon-mail.png" alt=""></span><span class="cl-text">leia.whitaker@icloud.com</span></a></li>
+          <li class="cl-cv"><a role="link" aria-disabled="true" title="CV coming soon"><span class="cl-icon" aria-hidden="true"><img src="assets/icon-cv.png" alt=""></span><span class="cl-text">CV</span></a></li>
+          <li class="cl-linkedin"><a role="link" aria-disabled="true" title="LinkedIn coming soon"><span class="cl-icon" aria-hidden="true"><img src="assets/icon-linkedin.png" alt=""></span><span class="cl-text">LinkedIn</span></a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+
+  <!-- Project panel: slides up over the page (script.js); the page behind is blurred -->
+  <dialog class="project-panel" id="panel-cardclutch" aria-labelledby="panel-cardclutch-title">
+    <div class="panel-scroll" data-lenis-prevent>
+      <div class="panel-bar">
+        <h2 id="panel-cardclutch-title" class="panel-title">CardClutch</h2>
+        <button class="panel-close" type="button" aria-label="Close project"><span aria-hidden="true">×</span></button>
+      </div>
+
+      <div class="panel-inner">
+        <!-- Video loads only when played, so YouTube isn't fetched until then -->
+        <div class="video-lite" data-youtube="gbUI7o2yo8k" data-title="CARDCLUTCH - Scotch X Stanley Concept (PDE)">
+          <img src="https://i.ytimg.com/vi/gbUI7o2yo8k/maxresdefault.jpg" alt="" loading="lazy">
+          <button class="video-play" type="button" aria-label="Play video: CardClutch, Scotch × Stanley concept"><span aria-hidden="true"></span></button>
+        </div>
+
+        <div class="board">
+          <img src="assets/projects/cardclutch/panel-01.webp" width="1684" height="1600" alt="CardClutch by Scotch × Stanley: a handheld guided card cutter combining measurement, guidance and cutting. Product opportunity: archives and collections, custom boxes and small heritage institutes. The initial concept, a programmable box cutter, and our process: discover, define, develop, deliver." decoding="async">
+          <img src="assets/projects/cardclutch/panel-02.webp" width="1684" height="1600" alt="Prototype, test, feedback, analysis and refine. The final concept: measure twice, cut once. CardClutch guides users through measuring, box-net generation and accurate cutting using a screen, laser, audio and haptic feedback." loading="lazy" decoding="async">
+          <img src="assets/projects/cardclutch/panel-03.webp" width="1684" height="1600" alt="User guide and user workflow: measure the object, save dimensions, generate a box net, import to the cutting space, position the cutter, secure the card with the clutch, start the programme, cut, turn, repeat, remove the clutch." loading="lazy" decoding="async">
+          <img src="assets/projects/cardclutch/panel-04.webp" width="1684" height="1600" alt="Internal system architecture, designed for manufacture. Power, sensing (time of flight sensor, encoders and a rolling ball module), actuation (stepper motor lead screw and servo laser guidance) and safety (magnetic clamp). Tools: Fusion 360, Blender, Python and Ansys. Meet the team: Ikem, Leia, Tim and Will." loading="lazy" decoding="async">
+          <img src="assets/projects/cardclutch/panel-05.webp" width="1684" height="496" alt="Individual reflection: bringing mechanical, electronic and functional subsystems together into one cohesive, manufacturable product, managing tolerances, snap-fits, clearances and injection moulding constraints, and validating components with FEA." loading="lazy" decoding="async">
+        </div>
+
+        <div class="panel-links">
+          <a class="preview-link" href="assets/PDE_Report%20(3).pdf" target="_blank" rel="noopener">
+            <span class="preview-img"><img src="assets/projects/cardclutch/preview-report.webp" width="640" height="905" alt="" loading="lazy"></span>
+            <span class="preview-label">View the technical report <span class="preview-meta">PDF, 6 MB</span></span>
+          </a>
+          <a class="preview-link" href="cardclutch.html">
+            <span class="preview-img"><img src="assets/projects/cardclutch/preview-more.webp" width="640" height="874" alt="" loading="lazy"></span>
+            <span class="preview-label">Find out more <span class="preview-meta">Full project page</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="project-panel" id="panel-santas-stuck" aria-labelledby="panel-santas-stuck-title">
+    <div class="panel-scroll" data-lenis-prevent>
+      <div class="panel-bar">
+        <h2 id="panel-santas-stuck-title" class="panel-title">Santa’s Stuck!</h2>
+        <button class="panel-close" type="button" aria-label="Close project"><span aria-hidden="true">×</span></button>
+      </div>
+
+      <div class="panel-inner">
+        <div class="board">
+          <img src="assets/projects/santas-stuck/intro-01.webp" width="1684" height="1600" alt="Santa’s Stuck! A playful interactive toy that uses behavioural feedback to create a sense of personality. Users experiment with different interactions to help Santa escape the chimney and deliver their present. Interactions: push him down, tickle his belt, pull his beard, knock a sequence, collect the present." loading="lazy" decoding="async">
+          <img src="assets/projects/santas-stuck/intro-02.webp" width="1684" height="1304" alt="Designing joy through interaction: observe Santa’s mood through his reactions, connect different actions to behaviour-driven states, and solve the right sequence to help Santa deliver his presents. My role: I designed all mechanical components in CAD, prepared the laser cut parts, built the electronics and programmed the interactive system, while my partner focused on the video and helped with the decorations." loading="lazy" decoding="async">
+        </div>
+
+        <!-- Demo video (plays from the site, no YouTube) -->
+        <div class="video-big">
+          <video controls playsinline preload="none" poster="assets/SantasStuck.png" aria-label="Santa’s Stuck! demo video">
+            <source src="assets/videos/santas-stuck.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="board">
+          <img src="assets/projects/santas-stuck/build-01.webp" width="1684" height="1600" alt="Mechanism development: Bela with C++ and Pure Data processes capacitive touch, piezo, limit switch and button inputs, controlling the mechanism and generating responsive real-time audio. 3D printing for rapid prototyping. Inspiration from Disney Imagineering and escape rooms. Vertical chimney movement driven by a screw linear actuator." loading="lazy" decoding="async">
+          <img src="assets/projects/santas-stuck/build-02.webp" width="1684" height="1600" alt="Present reveal driven by a gear train and rack-and-pinion with a 20:1 gear reduction to synchronise with Santa’s movement. Head shaking: one servo creates a sharp “no” shake or a gentle laughing wobble, with non-blocking millis() timing. Late night testing occasionally turned Santa a little demonic." loading="lazy" decoding="async">
+          <img src="assets/projects/santas-stuck/build-03.webp" width="1684" height="558" alt="Interaction flow map: from the start, belt tickles and beard pulls move Santa between happy, neutral and angry states. Tapping the chimney when happy makes Santa drop down and deliver the present; when angry he refuses as you are on the naughty list." loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="project-panel" id="panel-behind-the-collection" aria-labelledby="panel-behind-the-collection-title">
+    <div class="panel-scroll" data-lenis-prevent>
+      <div class="panel-bar">
+        <h2 id="panel-behind-the-collection-title" class="panel-title">Behind the Collection</h2>
+        <button class="panel-close" type="button" aria-label="Close project"><span aria-hidden="true">×</span></button>
+      </div>
+
+      <div class="panel-inner">
+        <!-- Board with real links laid exactly over its drawn "Find Out More" buttons -->
+        <div class="board board--links">
+            <img src="assets/projects/behind-the-collection/board-01.webp" width="1684" height="1600" alt="Pigeonhold project overview. Aim: to identify unmet user and market needs within archives and collection management, then translate these insights into a viable, user centred product. The project was split into group research and individual development. Group research: 1. Gather context, 2. User research, 3. Insight synthesis, each with key learnings." loading="lazy" decoding="async">
+            <img src="assets/projects/behind-the-collection/board-02.webp" width="1684" height="1600" alt="Group research continued: 6. Journey mapping, creating personas and mapping user workflows, and 5. Market analysis, comparing existing products, each with key learnings." loading="lazy" decoding="async">
+            <img src="assets/projects/behind-the-collection/board-03.webp" width="1684" height="1260" alt="Individual development, product design: generating and refining design concepts, with iteration sketches, the final concept that traces an object and cuts a bespoke foam insert with a heated rod on an XYZ rail system, and how it works: trace, home, cut." loading="lazy" decoding="async">
+          <a class="find-more" href="behind-the-collection.html#archives-collections" style="left:9.501%;top:43.632%" aria-label="Find out more: Gather Context">Find Out More <span aria-hidden="true">→</span></a>
+          <a class="find-more" href="behind-the-collection.html#interviews" style="left:41.330%;top:45.561%" aria-label="Find out more: User Research">Find Out More <span aria-hidden="true">→</span></a>
+          <a class="find-more" href="behind-the-collection.html#insights" style="left:72.922%;top:43.229%" aria-label="Find out more: Insight Synthesis">Find Out More <span aria-hidden="true">→</span></a>
+          <a class="find-more" href="behind-the-collection.html#journey-mapping" style="left:14.133%;top:62.646%" aria-label="Find out more: Journey Mapping">Find Out More <span aria-hidden="true">→</span></a>
+          <a class="find-more" href="behind-the-collection.html#market-analysis" style="left:61.045%;top:64.753%" aria-label="Find out more: Market Analysis">Find Out More <span aria-hidden="true">→</span></a>
+          <a class="find-more" href="behind-the-collection.html#individual-focus" style="left:75.178%;top:93.767%" aria-label="Find out more: Product Design">Find Out More <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="panel-links panel-links--single">
+          <a class="preview-link" href="behind-the-collection.html">
+            <span class="preview-img"><img src="assets/projects/behind-the-collection/preview-process.webp" width="640" height="905" alt="" loading="lazy"></span>
+            <span class="preview-label">Read the full process <span class="preview-meta">18 slides</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="project-panel" id="panel-aerodynamic-suv" aria-labelledby="panel-aerodynamic-suv-title">
+    <div class="panel-scroll" data-lenis-prevent>
+      <div class="panel-bar">
+        <h2 id="panel-aerodynamic-suv-title" class="panel-title">Aerodynamic SUV</h2>
+        <button class="panel-close" type="button" aria-label="Close project"><span aria-hidden="true">×</span></button>
+      </div>
+
+      <div class="panel-inner">
+        <div class="board">
+          <img src="assets/projects/aerodynamic-suv/board-01.webp" width="1684" height="1600" alt="Designing an Aerodynamic SUV. Design summary: a simplified SUV geometry for real-world conditions, analysed with CFD to assess flow, drag and lift and propose targeted improvements, focusing on underbody flow, wheelhouse flow and the rear wake. Streamline plot over the SUV. Learning outcomes: understanding underbody, wheelhouse and wake flow; creating CFD-ready CAD in Blender; interpreting pressure, velocity and streamline plots; critically evaluating simulation results." loading="lazy" decoding="async">
+          <img src="assets/projects/aerodynamic-suv/board-02.webp" width="1684" height="620" alt="CFD results overview: the model achieved a drag coefficient of about 0.361, a reasonable SUV-range value. The rear wake is dominated by a large low-pressure recirculation zone; the diffuser, rear wheel arches and rear roof slope show separation; and the lateral guide vanes act more like vortex shedders. Changed regions on the original design." loading="lazy" decoding="async">
+        </div>
+
+        <div class="panel-links panel-links--single">
+          <a class="preview-link" href="aerodynamic-suv.html">
+            <span class="preview-img"><img src="assets/projects/aerodynamic-suv/preview-process.webp" width="640" height="905" alt="" loading="lazy"></span>
+            <span class="preview-label">Read the process</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="project-panel" id="panel-aircraft-seat" aria-labelledby="panel-aircraft-seat-title">
+    <div class="panel-scroll" data-lenis-prevent>
+      <div class="panel-bar">
+        <h2 id="panel-aircraft-seat-title" class="panel-title">Sustainable Aircraft Seat</h2>
+        <button class="panel-close" type="button" aria-label="Close project"><span aria-hidden="true">×</span></button>
+      </div>
+
+      <div class="panel-inner">
+        <!-- Real links laid exactly over the board's two drawn "Discover The Research" buttons -->
+        <div class="board board--links board--seat">
+            <img src="assets/projects/aircraft-seat/board-01.webp" width="1684" height="1600" alt="Sustainable Design Engineering. Aim: to explore how economy-class aircraft seating could be made more sustainable by understanding the environmental, user and market challenges across the seat’s lifecycle, then identifying opportunities for circular design. Group research: investigating stakeholders, user experience, material waste, manufacturing and end of life, market benchmarks, a physical teardown and an Eco Audit, then developing How Might We questions." loading="lazy" decoding="async">
+            <img src="assets/projects/aircraft-seat/board-02.webp" width="1684" height="1600" alt="Key How Might We questions discovered, covering modular branding interfaces, repurposing composite parts, modular upgrades, seat-to-aircraft fastening and reconfigurable seat bases. Individual design: the selected and refined HMW, redesigning the comfort layer of economy seats as a modular add-on to existing frames. Final concept, before and after, and key requirements: circularity, frame compatibility and comfort." loading="lazy" decoding="async">
+            <img src="assets/projects/aircraft-seat/board-03.webp" width="1684" height="556" alt="Final concept details: fasteners with keyhole tabs and steel C-spring clips, in-seat heating and cooling, and mono-material PET suspension fabric, seat cover and foam." loading="lazy" decoding="async">
+            <a class="discover-btn" href="aircraft-seat-research.html" style="left:37.227%;top:42.050%" aria-label="Discover the group research">Discover The Research <span aria-hidden="true">→</span></a>
+            <a class="discover-btn" href="aircraft-seat-design.html" style="left:37.647%;top:95.968%" aria-label="Discover the individual design research">Discover The Research <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="project-panel" id="panel-battery-cooling-plate" aria-labelledby="panel-battery-cooling-plate-title">
+    <div class="panel-scroll" data-lenis-prevent>
+      <div class="panel-bar">
+        <h2 id="panel-battery-cooling-plate-title" class="panel-title">Battery Cooling Plate</h2>
+        <button class="panel-close" type="button" aria-label="Close project"><span aria-hidden="true">×</span></button>
+      </div>
+
+      <div class="panel-inner">
+        <div class="board">
+          <img src="assets/projects/battery-cooling-plate/board-01.webp" width="1684" height="1600" alt="Battery Cooling Plate. Aim: design a cooling plate pipeline geometry that maintains temperature uniformity across the battery surface, minimising thermal gradients to preserve battery longevity while providing effective heat transfer. Initial design and final iteration, with key features: a hybrid serpentine-parallel configuration, consistent diameter and bend curvature, and pressure management. Learning outcomes: creating CFD-ready meshes, using CFD to guide iterations, and balancing thermal performance, pressure drop and manufacturability." loading="lazy" decoding="async">
+          <img src="assets/projects/battery-cooling-plate/board-02.webp" width="1684" height="980" alt="Initial vs final design overview: CFD results evaluation of uneven temperature flow distribution and low heat flux, with temperature streamlines and lambda 2 vortices. Improvement summary: temperature spread reduced from 15.2 °C to 12.3 °C, average temperature from 42.8 °C to 35.1 °C and maximum temperature from 48 °C to 38.9 °C, with pressure drop rising from 79.6 Pa to 110 Pa. Team responsibilities for Leia, Aliyah, Kyara and Aliza." loading="lazy" decoding="async">
+        </div>
+
+        <div class="panel-links panel-links--single">
+          <a class="preview-link" href="battery-cooling-plate.html">
+            <span class="preview-img"><img src="assets/projects/battery-cooling-plate/preview-process.webp" width="640" height="685" alt="" loading="lazy"></span>
+            <span class="preview-label">Read the process</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="project-panel" id="panel-tilt-quest" aria-labelledby="panel-tilt-quest-title">
+    <div class="panel-scroll" data-lenis-prevent>
+      <div class="panel-bar">
+        <h2 id="panel-tilt-quest-title" class="panel-title">Tilt Quest</h2>
+        <button class="panel-close" type="button" aria-label="Close project"><span aria-hidden="true">×</span></button>
+      </div>
+
+      <div class="panel-inner">
+        <div class="board">
+          <img src="assets/projects/tilt-quest/board-01.webp?v=2" width="1634" height="1600" alt="Using play to bring communities together. Stage 1 overview: with an Urban Play brief, this human centred design project explored how urban spaces could help international newcomers overcome social and cultural barriers and develop a sense of belonging, focusing on spontaneous, low-pressure and non-verbal interactions. Research process: observations, a survey and interviews, leading to insights and opportunities, personas and journey mapping, and context mapping with an affinity diagram." loading="lazy" decoding="async">
+          <img src="assets/projects/tilt-quest/board-02.webp?v=2" width="1634" height="1600" alt="Stage 2 overview: developing and testing the Tilting Tunes Table, combining shared play, music and cultural exchange, iterated through sketches, co-design sessions and prototypes into an open cross-shaped frame needing at least two players. Requirements and evidence: easily interpreted, non-verbal, interactive between people, playful and cultural sharing, visually engaging, and multi-sensory, each backed by user testing." loading="lazy" decoding="async">
+          <img src="assets/projects/tilt-quest/board-03.webp?v=2" width="1634" height="896" alt="Reflection: the project strengthened human centred design skills, especially uncovering insights through less obvious research methods and keeping users involved throughout to challenge assumptions and refine ideas." loading="lazy" decoding="async">
+        </div>
+
+        <div class="panel-links">
+          <a class="preview-link" href="assets/projects/tilt-quest/tilt-quest-phase-1.pdf" target="_blank" rel="noopener">
+            <span class="preview-img preview-img--fill"><img src="assets/projects/tilt-quest/preview-phase-1.webp" width="640" height="452" alt="" loading="lazy"></span>
+            <span class="preview-label">Read About Phase 1 <span class="preview-meta">PDF, 9 MB</span></span>
+          </a>
+          <a class="preview-link" href="assets/projects/tilt-quest/tilt-quest-phase-2.pdf" target="_blank" rel="noopener">
+            <span class="preview-img preview-img--fill"><img src="assets/projects/tilt-quest/preview-phase-2.webp" width="640" height="360" alt="" loading="lazy"></span>
+            <span class="preview-label">Read About Phase 2 <span class="preview-meta">PDF, 28 MB</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+  <script src="script.js?v=20261007141148"></script>
+  <script src="project.js?v=20261007141148"></script>
+</body>
+</html>

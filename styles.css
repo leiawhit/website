@@ -194,6 +194,24 @@ body {
   height: calc(597.81 * var(--u));
   max-width: none;
 }
+/* Placeholder filling the photo shape. The shape has a notch down its left side, so the
+   icon is centred on the main body (design x 45–263) rather than the whole box. */
+.photo-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-left: calc(45 * var(--u));
+  background: #ece3cf;
+}
+.photo-placeholder svg {
+  width: calc(96 * var(--u));
+  height: calc(96 * var(--u));
+  fill: none;
+  stroke: #b7aa8f;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
 
 /* Intro origin = design point (518, 305) */
 .intro {

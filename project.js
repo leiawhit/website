@@ -30,6 +30,8 @@ function setGameExpanded(frame, expand) {
   frame.querySelector('iframe').focus();
 }
 
+const GAME_PAGES = { 'index.html': 'menu', 'game.html': 'game', 'tutorial.html': 'tutorial' };
+
 document.querySelectorAll('.game-frame').forEach((frame) => {
   frame.querySelector('.game-expand').addEventListener('click', () => {
     setGameExpanded(frame, !frame.classList.contains('is-expanded'));
@@ -59,6 +61,11 @@ document.querySelectorAll('.game-frame').forEach((frame) => {
       visited.push(page);
     }
     back.disabled = visited.length < 2;
+    // The button just says "Back" (kept short so it stays clear of the board); the tooltip and
+    // screen readers say where it goes, e.g. "Back to menu"
+    const target = visited.length > 1 ? visited[visited.length - 2].split('/').pop().split(/[?#]/)[0] : '';
+    back.title = `Back to ${GAME_PAGES[target] || 'previous screen'}`;
+    back.setAttribute('aria-label', back.title);
     if (!page || page === 'about:blank') return;
     // While playing, key presses go to the game itself, so listen there for Esc too
     iframe.contentWindow.addEventListener('keydown', (e) => {

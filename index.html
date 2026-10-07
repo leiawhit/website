@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,0,1;9..144,600,0,1;9..144,700,0,1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="styles.css?v=20261007154552">
+  <link rel="stylesheet" href="styles.css?v=20261007160941">
 </head>
 <body>
   <!-- Inline so the photo clip and "!" colour work even when opened straight from disk -->
@@ -443,18 +443,16 @@
         <!-- Playable game (labyrinth-game/). It only loads when the panel opens (project.js). -->
         <div class="game-block">
           <div class="game-frame">
-            <div class="game-toolbar">
-              <button class="game-btn game-back" type="button" disabled>
-                <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M15 5l-7 7 7 7"/></svg>
-                <span>Back</span>
-              </button>
+            <iframe data-src="labyrinth-game/index.html" title="Labyrinth, playable game" allow="fullscreen; autoplay"></iframe>
+            <div class="game-controls">
               <button class="game-btn game-expand" type="button" aria-pressed="false">
                 <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path class="icon-expand" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><path class="icon-shrink" d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>
                 <span class="game-expand-label">Expand game</span>
               </button>
-            </div>
-            <div class="game-screen">
-              <iframe data-src="labyrinth-game/index.html" title="Labyrinth, playable game" allow="fullscreen; autoplay"></iframe>
+              <button class="game-btn game-back" type="button" disabled>
+                <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M15 5l-7 7 7 7"/></svg>
+                <span class="game-back-label">Back</span>
+              </button>
             </div>
           </div>
           <p class="game-hint">Choose 2–4 players and take turns on one screen. Best played expanded on a laptop or desktop.</p>
@@ -564,7 +562,7 @@
   </dialog>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-  <script src="script.js?v=20261007154552"></script>
-  <script src="project.js?v=20261007154552"></script>
+  <script src="script.js?v=20261007160941"></script>
+  <script src="project.js?v=20261007160941"></script>
 </body>
 </html>

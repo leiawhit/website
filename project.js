@@ -2,7 +2,10 @@
 // (used by index.html and the project pages).
 
 // --- Video: show a thumbnail, and only load YouTube when someone presses play.
+// Closing the panel puts the thumbnail and play button back, so the video can be played again.
 document.querySelectorAll('.video-lite').forEach((box) => {
+  const thumbnail = [...box.childNodes];
+  box.resetVideo = () => { if (box.querySelector('iframe')) box.replaceChildren(...thumbnail); };
   box.querySelector('.video-play').addEventListener('click', () => {
     const iframe = document.createElement('iframe');
     iframe.src = `https://www.youtube-nocookie.com/embed/${box.dataset.youtube}?autoplay=1&rel=0`;
@@ -113,7 +116,8 @@ function resetPanel(panel) {
   panel.classList.remove('is-closing');
   if (panel.open) panel.close();
   if (!document.querySelector('.project-panel[open]')) setPanelOpen(false);
-  panel.querySelectorAll('.video-lite iframe, iframe[data-src]').forEach((f) => { f.src = 'about:blank'; });
+  panel.querySelectorAll('.video-lite').forEach((box) => box.resetVideo());
+  panel.querySelectorAll('iframe[data-src]').forEach((f) => { f.src = 'about:blank'; });
   panel.querySelectorAll('.game-frame.is-expanded').forEach((frame) => setGameExpanded(frame, false));
   panel.querySelectorAll('video').forEach((v) => v.pause());
 }

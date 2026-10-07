@@ -752,7 +752,7 @@ body { overflow-x: clip; }
   width: 100%;
   height: auto;
   max-width: none;
-  filter: url(#tint-green);
+  /* Already coloured green in the file: Safari drops SVG filters on images this large */
 }
 
 .contact-links {

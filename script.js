@@ -69,6 +69,7 @@ const THUMB = 0.68;        // size of the thumbnails next to the current card…
 const SHRINK = 0.85;      // …each one further out is this much smaller again
 const GAP = 26;            // space between the big card and thumbnails, and between thumbnails
 const MAX_SCALE = 1.6;     // how much bigger than the Figma card it can grow
+const TALL_SCREEN = 960;   // window height (px) where the whole heading still fits above the cards
 const AUTOPLAY_MS = 2000;  // move on every 2 seconds…
 const FAV_MS = 3500;       // …but linger on the favourite projects
 
@@ -119,8 +120,11 @@ const bob = (j) => (((j * 53) % 5) - 2) * 7;     // -14…14 px
 
 function render(dragPx = 0) {
   // As big as fits, up to 1.6× the Figma card: the Projects heading, the carousel and its
-  // dots should all be on screen together (the skills strip above is its own section).
-  const reserved = headingBox.offsetHeight + dotsBox.offsetHeight + 56;
+  // dots on screen together (the skills strip above is its own section). On shorter screens
+  // (most laptops, MacBooks especially) the heading gives way instead of the cards shrinking:
+  // it may sit partly above the top, so the cards stay the size they are on a 1080p screen.
+  const headingRoom = Math.max(0, headingBox.offsetHeight - Math.max(0, TALL_SCREEN - innerHeight));
+  const reserved = headingRoom + dotsBox.offsetHeight + 56;
   const cs = Math.max(0.5, Math.min(MAX_SCALE, (viewport.clientWidth - 32) / CARD_W, (innerHeight - reserved) / CARD_H));
   carousel.style.setProperty('--cs', cs.toFixed(4));
   const centre = viewport.clientWidth / 2 / cs + dragPx / cs;

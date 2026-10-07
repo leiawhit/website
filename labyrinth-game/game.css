@@ -256,7 +256,7 @@ body {
     top: 0;
     width: 43px;
     height: 62px;
-    background-image: url("assets/EarthSpritesheet.png");
+    background-image: url("assets/earthspritesheet.png");
     background-repeat: no-repeat;
     background-size: 129px 124px;
     background-position: 0 0;
@@ -283,7 +283,7 @@ body {
     top: 0;
     width: 43px;
     height: 62px;
-    background-image: url("assets/ShadowSpritesheet.png");
+    background-image: url("assets/Shadowspritesheet.png");
     background-repeat: no-repeat;
     background-size: 129px 124px;
     background-position: 0 0;
@@ -310,7 +310,7 @@ body {
     top: 0;
     width: 43px;
     height: 62px;
-    background-image: url("assets/WindSpritesheet.png");
+    background-image: url("assets/Windspritesheet.png");
     background-repeat: no-repeat;
     background-size: 129px 124px;
     background-position: 0 0;

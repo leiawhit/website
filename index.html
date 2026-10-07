@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,0,1;9..144,600,0,1;9..144,700,0,1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="styles.css?v=20261007160941">
+  <link rel="stylesheet" href="styles.css?v=20261007170441">
 </head>
 <body>
   <!-- Inline so the photo clip and "!" colour work even when opened straight from disk -->
@@ -24,10 +24,6 @@
       </filter>
       <filter id="tint-white" color-interpolation-filters="sRGB">
         <feFlood flood-color="#ffffff"/>
-        <feComposite in2="SourceAlpha" operator="in"/>
-      </filter>
-      <filter id="tint-green" color-interpolation-filters="sRGB">
-        <feFlood flood-color="#87aa1b"/>
         <feComposite in2="SourceAlpha" operator="in"/>
       </filter>
       <filter id="tint-grey" color-interpolation-filters="sRGB">
@@ -324,7 +320,7 @@
     <section id="contact" class="contact" aria-labelledby="contact-title">
       <div class="contact-canvas">
         <h2 id="contact-title" class="contact-title"><img src="assets/title-contacts.svg" alt="Contacts" width="276" height="55"></h2>
-        <div class="contact-illustration" aria-hidden="true"><img src="assets/contact-illustration.png" alt="" loading="lazy"></div>
+        <div class="contact-illustration" aria-hidden="true"><img src="assets/contact-illustration-green.png" alt="" width="2270" height="1514" loading="lazy"></div>
         <ul class="contact-links">
           <li class="cl-email"><a href="mailto:leia.whitaker@icloud.com"><span class="cl-icon" aria-hidden="true"><img src="assets/icon-mail.png" alt=""></span><span class="cl-text">leia.whitaker@icloud.com</span></a></li>
           <li class="cl-cv"><a role="link" aria-disabled="true" title="CV coming soon"><span class="cl-icon" aria-hidden="true"><img src="assets/icon-cv.png" alt=""></span><span class="cl-text">CV</span></a></li>
@@ -562,7 +558,7 @@
   </dialog>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-  <script src="script.js?v=20261007160941"></script>
-  <script src="project.js?v=20261007160941"></script>
+  <script src="script.js?v=20261007170441"></script>
+  <script src="project.js?v=20261007170441"></script>
 </body>
 </html>

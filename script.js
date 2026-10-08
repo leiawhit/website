@@ -9,6 +9,78 @@ const lenis = !reduceMotion.matches && 'Lenis' in window
   : null;
 window.lenis = lenis; // project.js pauses it while a project panel is open
 
+// In-page links that pass the bubble animation on the way down:
+// - About (and the "Scroll" arrow) glide down but slow right down while the sun inflates, so the
+//   animation plays at a watchable pace (~1.4 s) instead of flashing past.
+// - Anything below About (Projects, Contact) skips it: jump straight to the point where it has
+//   finished, then glide the short rest of the way.
+// Lenis's own anchor handling still covers every other link.
+
+// Easing for a glide that eases in and out and moves slowly between fractions a and b of the
+// trip (at  times the speed). Built from a speed profile, integrated into a table of time
+// against distance. Also returns the share of the time spent before a and inside [a, b].
+function slowThrough(a, b, slow) {
+  const STEPS = 400;
+  const smoothstep = (x) => { const c = Math.min(1, Math.max(0, x)); return c * c * (3 - 2 * c); };
+  const times = [0];
+  for (let i = 1; i <= STEPS; i++) {
+    const s = (i - 0.5) / STEPS;
+    const ends = 0.15 + 0.85 * Math.sin(Math.PI * s) ** 0.6;
+    const inside = smoothstep((s - a) / 0.06 + 1) * smoothstep((b - s) / 0.06 + 1);
+    times.push(times[i - 1] + 1 / STEPS / (ends * (1 - (1 - slow) * inside)));
+  }
+  const total = times[STEPS];
+  const at = (s) => times[Math.round(Math.min(1, Math.max(0, s)) * STEPS)] / total;
+  const easing = (t) => { // invert the table: distance travelled at time t
+    let lo = 0;
+    let hi = STEPS;
+    while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (times[mid] / total < t) lo = mid; else hi = mid; }
+    const t0 = times[lo] / total;
+    const t1 = times[hi] / total;
+    return (lo + (t1 > t0 ? (t - t0) / (t1 - t0) : 0)) / STEPS;
+  };
+  return { easing, beforeShare: at(a), insideShare: at(b) - at(a) };
+}
+
+if (lenis) {
+  const about = document.querySelector('.about');
+  const aboutEnd = document.querySelector('#about'); // marks where the animation has finished
+  const pageTop = (el) => el.getBoundingClientRect().top + scrollY;
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href^="#"]');
+    const target = link && link.hash.length > 1 && document.querySelector(link.hash);
+    if (!target) return;
+    const endOfAnimation = pageTop(aboutEnd);
+    const targetTop = pageTop(target);
+    if (targetTop < endOfAnimation - 1 || scrollY >= endOfAnimation - 1) return; // let Lenis handle it
+    e.preventDefault();
+    e.stopPropagation(); // capture phase: Lenis's own anchor handling never sees this click
+    history.replaceState(null, '', link.hash);
+
+    if (targetTop > endOfAnimation + 1) { // below About: skip the animation
+      lenis.scrollTo(endOfAnimation, { immediate: true, force: true });
+      lenis.scrollTo(target, { duration: 0.9, easing: (t) => 1 - (1 - t) ** 3 });
+      return;
+    }
+    // To About: the sun inflates between p = 0.3 and 0.75 (see updateAbout below)
+    const from = scrollY;
+    const trip = endOfAnimation - from;
+    const scrollAtP = (p) => pageTop(about) - innerHeight + p * about.offsetHeight;
+    const a = (scrollAtP(0.3) - from) / trip;
+    const b = (scrollAtP(0.75) - from) / trip;
+    // Inflating takes INFLATE_S. Slow down as little as possible, but enough that the lead-in
+    // to it stays under ~0.6 s.
+    const INFLATE_S = 1.4;
+    let glide;
+    for (const slow of [0.4, 0.35, 0.3, 0.25, 0.2, 0.15]) {
+      glide = slowThrough(a, b, slow);
+      if ((INFLATE_S / glide.insideShare) * glide.beforeShare <= 0.6) break;
+    }
+    const duration = Math.min(3.5, Math.max(1.2, INFLATE_S / Math.max(glide.insideShare, 0.01)));
+    lenis.scrollTo(endOfAnimation, { duration, easing: glide.easing });
+  }, true);
+}
+
 // --- Cover: as you scroll away, the tiles and circles float up faster than the page and
 // turn slightly, each at its own speed (styles.css reads --scroll, --speed and --spin).
 const cover = document.querySelector('.page');
@@ -176,9 +248,9 @@ function goToProject(i) {
   go(step);
 }
 
-// --- Autoplay: next project every 2 s whenever the carousel is on screen. It only pauses
-// mid-drag, when the tab is hidden, or with the pause button (and starts paused for
-// reduced-motion users).
+// --- Autoplay: next project every 2 s whenever the carousel is on screen. It pauses while the
+// mouse is over a card, mid-drag, when the tab is hidden, or with the pause button (and starts
+// paused for reduced-motion users).
 // The current dot (a star) spins to show the time left.
 let userPaused = reduceMotion.matches;
 let dragging = false;
@@ -190,7 +262,8 @@ carousel.style.setProperty('--autoplay', `${remaining}ms`);
 let startedAt = 0;
 
 let panelOpen = false;
-const canPlay = () => !userPaused && !dragging && !panelOpen && onScreen && !document.hidden;
+let hovering = false;
+const canPlay = () => !userPaused && !dragging && !hovering && !panelOpen && onScreen && !document.hidden;
 
 function updateAutoplay() {
   const play = canPlay();
@@ -226,6 +299,15 @@ toggle.addEventListener('click', () => {
 document.addEventListener('visibilitychange', updateAutoplay);
 document.addEventListener('panelchange', (e) => { panelOpen = e.detail.open; updateAutoplay(); });
 new IntersectionObserver(([entry]) => { onScreen = entry.isIntersecting; updateAutoplay(); }, { threshold: 0.3 }).observe(viewport);
+
+// Hold still while the mouse is over a card, so it can be read or clicked (mouse only: a tap
+// on a touch screen shouldn't leave it paused)
+viewport.addEventListener('pointerover', (e) => {
+  if (e.pointerType !== 'mouse') return;
+  hovering = Boolean(e.target.closest('.cards > .card'));
+  updateAutoplay();
+});
+viewport.addEventListener('pointerleave', () => { hovering = false; updateAutoplay(); });
 
 // --- Swipe (touch) and drag (mouse)
 let dragStartX = null;

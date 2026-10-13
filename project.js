@@ -86,6 +86,81 @@ document.addEventListener('fullscreenchange', () => {
   });
 });
 
+// --- Phone demo (Lorra): the app screens slide along behind a phone that stays in the middle.
+// A copy of the screens on each side makes the loop seamless: after sliding into a copy, the
+// strip snaps back by one set without animating. Moves on every few seconds while on screen
+// (not while the mouse is over it, nor for reduced-motion users); the arrows step back and forth
+// and the dots jump to a screen.
+const DEMO_STEP_MS = 4000; // time per screen, including the 0.9 s slide
+
+document.querySelectorAll('.phone-demo').forEach((demo) => {
+  const stage = demo.querySelector('.phone-demo-stage');
+  const track = demo.querySelector('.phone-demo-track');
+  const captions = [...demo.querySelectorAll('.phone-demo-caption')];
+  const dots = [...demo.querySelectorAll('.phone-demo-dot')];
+  const screens = [...track.children];
+  const count = screens.length;
+  const copy = () => screens.map((img) => {
+    const clone = img.cloneNode();
+    clone.alt = '';
+    clone.setAttribute('aria-hidden', 'true');
+    return clone;
+  });
+  track.prepend(...copy());
+  track.append(...copy());
+
+  let pos = count; // index in the strip of the screen in the phone (middle set: count … 2·count − 1)
+  let visible = false;
+  let hovering = false;
+  let timer = null;
+
+  function place(animate) {
+    const width = screens[0].offsetWidth;
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    track.classList.toggle('is-jumping', !animate || reduceMotionPanel.matches);
+    track.style.transform = `translateX(${stage.clientWidth / 2 - (pos * (width + gap) + width / 2)}px)`;
+    if (!animate) { void track.offsetWidth; track.classList.remove('is-jumping'); }
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    if (visible && !hovering && !reduceMotionPanel.matches) timer = setTimeout(() => goTo(pos + 1), DEMO_STEP_MS);
+  }
+
+  function goTo(newPos) {
+    pos = newPos;
+    const current = ((pos % count) + count) % count;
+    captions.forEach((c, i) => c.classList.toggle('is-current', i === current));
+    dots.forEach((d, i) => (i === current ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+    place(true);
+    schedule();
+  }
+
+  track.addEventListener('transitionend', (e) => {
+    if (e.target !== track) return;
+    if (pos >= 2 * count) { pos -= count; place(false); }
+    if (pos < count) { pos += count; place(false); }
+  });
+
+  dots.forEach((dot, i) => dot.addEventListener('click', () => {
+    const current = ((pos % count) + count) % count;
+    goTo(pos + (i - current));
+  }));
+
+  demo.querySelectorAll('.phone-demo-arrow').forEach((arrow) => {
+    arrow.addEventListener('click', () => goTo(pos + Number(arrow.dataset.step)));
+  });
+  stage.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { hovering = true; schedule(); } });
+  stage.addEventListener('pointerleave', () => { hovering = false; schedule(); });
+  addEventListener('resize', () => place(false));
+  new IntersectionObserver(([entry]) => {
+    const wasVisible = visible;
+    visible = entry.isIntersecting;
+    if (visible && !wasVisible) place(false); // the panel may have been closed (no size) until now
+    schedule();
+  }, { threshold: 0.4 }).observe(stage);
+});
+
 // --- Panel: slides up over the page; the page behind is blurred (::backdrop in styles.css).
 const reduceMotionPanel = matchMedia('(prefers-reduced-motion: reduce)');
 

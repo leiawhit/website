@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,0,1;9..144,600,0,1;9..144,700,0,1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="styles.css?v=20261008212621">
+  <link rel="stylesheet" href="styles.css?v=20261013212551">
 </head>
 <body>
   <!-- Inline so the photo clip and "!" colour work even when opened straight from disk -->
@@ -84,10 +84,7 @@
           <img src="assets/shape-pink-frame-top.svg" alt="" style="--iw:127;--ih:155;--r:89.66deg;--sy:-1">
         </div>
         <div class="photo">
-          <!-- Placeholder until the new photo is ready (old one: assets/photo.png) -->
-          <div class="photo-placeholder" role="img" aria-label="Photo of Leia, coming soon">
-            <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="22" r="12"/><path d="M10 58c0-12.2 9.8-21 22-21s22 8.8 22 21"/></svg>
-          </div>
+          <img class="photo-portrait" src="assets/profile-photo.webp" alt="Leia smiling as she presents with a microphone" width="760" height="691" decoding="async">
         </div>
         <div class="piece" style="--l:303;--t:12;--w:56;--h:110;--tilt:7deg">
           <img src="assets/shape-yellow-frame.svg" alt="" style="--iw:110;--ih:56;--r:-90deg;--sy:-1">
@@ -312,6 +309,15 @@
               <h3 class="card-title">Tilt Quest</h3>
               <p class="card-text">Project exploring how urban spaces can help international newcomers overcome social and cultural barriers and develop a sense of belonging. Through research, co-design and prototyping, we developed a playful, non-verbal experience using shared play, music and cultural exchange to encourage spontaneous interaction.</p>
               <button class="card-open" type="button" data-open="tilt-quest">View project <span aria-hidden="true">→</span></button>
+            </article>
+            <article class="card" data-project="lorra">
+              <img class="card-img" src="assets/projects/lorra/cover.webp?v=5" alt="Lorra app screens for planning breaks, podcasts and healthy meals on three phones" width="1400" height="784" decoding="async">
+              <ul class="tags" aria-label="Skills">
+                <li class="tag tag--yellow">Human Centred Design</li>
+              </ul>
+              <h3 class="card-title">Lorra</h3>
+              <p class="card-text">Collaborated with medical students to develop a wellbeing app tailored to lorry drivers’ needs, integrating healthier habits into the realities of life on the road.</p>
+              <button class="card-open" type="button" data-open="lorra">View project <span aria-hidden="true">→</span></button>
             </article>
           </div>
         </div>
@@ -560,8 +566,65 @@
     </div>
   </dialog>
 
+  <dialog class="project-panel" id="panel-lorra" aria-labelledby="panel-lorra-title">
+    <div class="panel-scroll" data-lenis-prevent>
+      <div class="panel-bar">
+        <h2 id="panel-lorra-title" class="panel-title">Lorra</h2>
+        <button class="panel-close" type="button" aria-label="Close project"><span aria-hidden="true">×</span></button>
+      </div>
+
+      <div class="panel-inner panel-inner--flush">
+        <div class="board">
+          <img src="assets/projects/lorra/board-01.webp" width="1684" height="1376" alt="Lorra: a voice activated wellbeing app for lorry drivers. Long-haul driving places unique demands on a driver’s wellbeing, from prolonged sitting and disrupted sleep to irregular meals and time away from family. Lorra works within the realities of life on the road, helping drivers build healthier routines around the working day they already have. Features: podcasts, community board, recommendations and reminders." loading="lazy" decoding="async">
+          <img src="assets/projects/lorra/board-02.webp" width="1684" height="1300" alt="The problem: 20% of UK road incidents are linked to driver fatigue (GOV.UK); 25% of lorry drivers report having mental health issues at some point in a year (HGVT); 84% of lorry drivers are overweight or obese and 10% have diagnosed type 2 diabetes (BMJ Open); 33% of lorry drivers report falling asleep at the wheel (European Transport Safety Council). The impact: primary stakeholders are lorry drivers and their families, secondary stakeholders are transport companies and healthcare advisors. Personal impacts include diet, safety, stretching, educational podcasts and social interactions; community impacts include safety for children walking to school, more confidence on the roads, social connectivity and improved public health." loading="lazy" decoding="async">
+        </div>
+
+        <!-- Prototype: the app screens slide along behind a phone; each one's caption shows as it fills the phone (project.js) -->
+        <section class="phone-demo" aria-labelledby="lorra-demo-title">
+          <h3 id="lorra-demo-title" class="phone-demo-title">The prototype</h3>
+          <div class="phone-demo-stage">
+            <div class="phone-demo-track">
+          <img class="phone-demo-screen" src="assets/projects/lorra/screen-drive.webp" width="780" height="1688" alt="Drive screen: break due in 25 minutes, with Leicester Forest East services 12 miles ahead offering showers, hot food, parking and a shop, a Take my break here button and a water tracker." loading="lazy" decoding="async">
+          <img class="phone-demo-screen" src="assets/projects/lorra/screen-listen.webp" width="780" height="1688" alt="Listen screen: a sleep and fatigue episode playing that finishes near Lancaster, with nutrition, posture and breathing episodes timed to end before Tebay." loading="lazy" decoding="async">
+          <img class="phone-demo-screen" src="assets/projects/lorra/screen-eat.webp" width="780" height="1688" alt="Eat screen: a chicken and rice pot from the hot food counter suggested to keep the driver going to Tebay, with other options and snacks worth grabbing." loading="lazy" decoding="async">
+          <img class="phone-demo-screen" src="assets/projects/lorra/screen-stretch.webp" width="780" height="1688" alt="Stretch screen: a 4-minute routine of neck rolls, shoulder shrugs, hamstrings on the cab step and a standing twist, plus spoken reminders while driving." loading="lazy" decoding="async">
+          <img class="phone-demo-screen" src="assets/projects/lorra/screen-crew.webp" width="780" height="1688" alt="Crew screen: Sarah can see the route home on Friday around 19:00 and has left a message, with tips from other drivers heading north on the M6." loading="lazy" decoding="async">
+            </div>
+            <div class="phone-demo-phone" aria-hidden="true"></div>
+          </div>
+          <div class="phone-demo-captions" aria-live="polite">
+            <p class="phone-demo-caption is-current"><span class="phone-demo-label">Drive</span> Counts down to the next legal break and suggests the best services to stop at, with showers, hot food and lorry parking shown at a glance.</p>
+            <p class="phone-demo-caption"><span class="phone-demo-label">Listen</span> Personalised podcasts featuring interesting facts tailored to drivers’ location, interests and wellbeing, with episodes timed to finish before their next planned stop.</p>
+            <p class="phone-demo-caption"><span class="phone-demo-label">Eat</span> Healthier meal and snack suggestions from what’s actually available at the current services.</p>
+            <p class="phone-demo-caption"><span class="phone-demo-label">Stretch</span> Personalised stretch routines for rest stops, paired with gentle spoken posture reminders while driving to encourage comfortable positioning and alertness.</p>
+            <p class="phone-demo-caption"><span class="phone-demo-label">Crew</span> Shares the route and arrival time with family, and lets drivers leave practical tips for others on the same roads.</p>
+          </div>
+          <div class="phone-demo-nav">
+            <button class="phone-demo-arrow" type="button" data-step="-1" aria-label="Previous screen">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <div class="phone-demo-dots" role="group" aria-label="Choose a screen">
+              <button class="phone-demo-dot" type="button" aria-label="Drive" aria-current="true"></button>
+              <button class="phone-demo-dot" type="button" aria-label="Listen"></button>
+              <button class="phone-demo-dot" type="button" aria-label="Eat"></button>
+              <button class="phone-demo-dot" type="button" aria-label="Stretch"></button>
+              <button class="phone-demo-dot" type="button" aria-label="Crew"></button>
+            </div>
+            <button class="phone-demo-arrow" type="button" data-step="1" aria-label="Next screen">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <div class="board">
+          <img src="assets/projects/lorra/team.webp" width="1684" height="844" alt="Meet the team: Kiera Vogiatzakis, medical student and research and content lead; Prarthana Vinoth, medical student and health and marketing lead; Ashsish Varughese, medical student and human centred design lead; Leia Whitaker, design engineering student and design and prototyping lead." loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-  <script src="script.js?v=20261008212621"></script>
-  <script src="project.js?v=20261008212621"></script>
+  <script src="script.js?v=20261013212551"></script>
+  <script src="project.js?v=20261013212551"></script>
 </body>
 </html>

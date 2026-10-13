@@ -194,23 +194,14 @@ body {
   height: calc(597.81 * var(--u));
   max-width: none;
 }
-/* Placeholder filling the photo shape. The shape has a notch down its left side, so the
-   icon is centred on the main body (design x 45–263) rather than the whole box. */
-.photo-placeholder {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  padding-left: calc(45 * var(--u));
-  background: #ece3cf;
-}
-.photo-placeholder svg {
-  width: calc(96 * var(--u));
-  height: calc(96 * var(--u));
-  fill: none;
-  stroke: #b7aa8f;
-  stroke-width: 3;
-  stroke-linecap: round;
+/* Profile photo (assets/profile-photo.webp), cropped to the shape's 263 × 239 proportions with
+   the face on the main body of the shape (right of the notch). Overrides the old photo offsets. */
+.photo .photo-portrait {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Intro origin = design point (518, 305) */
@@ -1186,6 +1177,149 @@ html.panel-open { overflow: hidden; }
   inset: 0;
   z-index: 10;
 }
+
+/* --- Phone demo (Lorra): a strip of app screens slides along behind a phone that stays in the
+   middle, like a conveyor; each screen's caption fades in as it fills the phone (project.js). */
+.phone-demo {
+  --sw: clamp(128px, 26vw, 190px);       /* screen width */
+  --sh: calc(var(--sw) * 1688 / 780);    /* screen height (390 × 844 frames) */
+  --sg: clamp(12px, 2.4vw, 20px);        /* gap between screens */
+  --bezel: 9px;
+  --lorra-teal: #1d5e59;
+  --lorra-coral: #e0644b;
+  padding: 36px 0 44px;
+  background: #fbf7f0; /* same cream as the Lorra boards */
+  text-align: center;
+}
+.phone-demo-title {
+  margin: 0 0 22px;
+  color: var(--lorra-teal);
+  font: 800 26px/1.1 "Overpass", "Segoe UI", Helvetica, Arial, sans-serif;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.phone-demo-stage {
+  position: relative;
+  height: calc(var(--sh) + 2 * var(--bezel) + 40px);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+}
+.phone-demo-track {
+  position: absolute;
+  top: calc(var(--bezel) + 14px);
+  left: 0;
+  display: flex;
+  gap: var(--sg);
+  transition: transform .9s cubic-bezier(.65, 0, .35, 1);
+  will-change: transform;
+}
+.phone-demo-track.is-jumping { transition: none; } /* seamless loop: snap back a set */
+.phone-demo-screen {
+  display: block;
+  flex: none;
+  width: var(--sw);
+  height: var(--sh);
+  border-radius: calc(var(--sw) * .09);
+  box-shadow: 0 4px 14px rgba(29, 94, 89, .14);
+}
+.phone-demo-phone {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  width: calc(var(--sw) + 2 * var(--bezel));
+  height: calc(var(--sh) + 2 * var(--bezel));
+  translate: -50% 0;
+  border: var(--bezel) solid #15191c;
+  border-radius: calc(var(--sw) * .09 + var(--bezel));
+  box-shadow: 0 18px 36px rgba(0, 0, 0, .28);
+  pointer-events: none;
+}
+.phone-demo-phone::before { /* camera pill */
+  content: "";
+  position: absolute;
+  top: calc(var(--sw) * .03);
+  left: 50%;
+  width: 30%;
+  height: calc(var(--sw) * .075);
+  translate: -50% 0;
+  border-radius: 99px;
+  background: #15191c;
+}
+.phone-demo-captions {
+  display: grid;
+  max-width: 560px;
+  margin: 10px auto 0;
+  padding: 0 24px;
+}
+.phone-demo-caption {
+  grid-area: 1 / 1;
+  margin: 0;
+  color: #2b2b2b;
+  font: 400 16px/1.55 "Overpass", "Segoe UI", Helvetica, Arial, sans-serif;
+  opacity: 0;
+  translate: 0 8px;
+  transition: opacity .25s, translate .25s;
+}
+.phone-demo-caption.is-current { /* fades in as its screen settles into the phone */
+  opacity: 1;
+  translate: 0 0;
+  transition: opacity .45s .45s, translate .45s .45s;
+}
+.phone-demo-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--lorra-coral);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.phone-demo-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+.phone-demo-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 99px;
+  background: rgba(29, 94, 89, .3);
+  cursor: pointer;
+  transition: width .3s, background-color .3s;
+}
+.phone-demo-dot[aria-current="true"] { width: 26px; background: var(--lorra-teal); }
+.phone-demo-dot:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+/* Back / forward arrows either side of the dots, below the screens so they never cover them */
+.phone-demo-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 18px;
+}
+.phone-demo-nav .phone-demo-dots { margin-top: 0; }
+.phone-demo-arrow {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--lorra-teal);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(29, 94, 89, .3);
+  cursor: pointer;
+  transition: background-color .2s, scale .2s var(--ease-pop);
+}
+.phone-demo-arrow:hover { background: var(--lorra-coral); scale: 1.08; }
+.phone-demo-arrow:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+.phone-demo-arrow svg { width: 46%; height: 46%; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+#panel-lorra .panel-inner { background: #fbf7f0; } /* Lorra cream all the way down */
 
 /* No stray focus line or blinking text cursor in the project panel when opened with the mouse.
    Keyboard users still get the orange focus ring on the buttons (:focus-visible). */

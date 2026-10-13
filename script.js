@@ -406,3 +406,19 @@ function openCurrentProject() {
 addEventListener('resize', () => render());
 render();
 updateAutoplay();
+
+// --- Contact: clicking the email copies it and the label above it says "Copied!". If the
+// browser won't allow copying, the link opens the email app as usual.
+const emailLink = document.querySelector('.cl-email a');
+if (emailLink && navigator.clipboard) {
+  let copiedTimer;
+  emailLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    const address = emailLink.href.replace(/^mailto:/, '');
+    navigator.clipboard.writeText(address).then(() => {
+      emailLink.classList.add('is-copied');
+      clearTimeout(copiedTimer);
+      copiedTimer = setTimeout(() => emailLink.classList.remove('is-copied'), 1800);
+    }, () => { location.href = emailLink.href; });
+  });
+}

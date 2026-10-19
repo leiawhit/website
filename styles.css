@@ -932,7 +932,8 @@ body { overflow-x: clip; }
 }
 .card-open:hover { background: var(--ink-soft); color: var(--cream); translate: 0 -2px; }
 .card-open:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
-.cards > .card[data-project].is-active { cursor: pointer; }
+.cards > .card:is([data-project], [data-pdf]).is-active { cursor: pointer; }
+a.card-open { text-decoration: none; } /* PDF cards use a link, styled like the buttons */
 .cards > .card:not(.is-active) .card-open { pointer-events: none; }
 
 /* --- Slide-up panel. Narrower than the screen, so the blurred page shows around it. */

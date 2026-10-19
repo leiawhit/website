@@ -397,11 +397,22 @@ carousel.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && e.target === carousel) { e.preventDefault(); openCurrentProject(); }
 });
 
-// Open the panel for the project in the middle (if it has one)
+// Open the project in the middle: its slide-up panel, or for a card with data-pdf (no panel)
+// its PDF in a new tab
 function openCurrentProject() {
-  const id = projects[mod(current, N)].dataset.project;
-  if (id && window.openProject) window.openProject(id);
+  const card = projects[mod(current, N)];
+  if (card.dataset.pdf) window.open(card.dataset.pdf, '_blank', 'noopener');
+  else if (card.dataset.project && window.openProject) window.openProject(card.dataset.project);
 }
+
+// "View project" links on PDF cards: a mouse or touch press is already handled by the tap on the
+// card above (opening it here too would open two tabs); from the keyboard, open it here
+document.querySelectorAll('.cards > .card[data-pdf] a.card-open').forEach((link) => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (e.detail === 0) window.open(link.href, '_blank', 'noopener');
+  });
+});
 
 addEventListener('resize', () => render());
 render();

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,0,1;9..144,600,0,1;9..144,700,0,1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
-  <link rel="stylesheet" href="styles.css?v=20261013222026">
+  <link rel="stylesheet" href="styles.css?v=20261019143847">
 </head>
 <body>
   <!-- Inline so the photo clip and "!" colour work even when opened straight from disk -->
@@ -327,6 +327,18 @@
               <p class="card-text">Collaborated with medical students to develop a wellbeing app tailored to lorry drivers’ needs, integrating healthier habits into the realities of life on the road.</p>
               <button class="card-open" type="button" data-open="lorra">View project <span aria-hidden="true">→</span></button>
             </article>
+            <!-- No panel: the card and its link open the report PDF in a new tab (script.js) -->
+            <article class="card" data-pdf="assets/projects/customer-behaviour-prediction/customer-behaviour-prediction-report.pdf">
+              <img class="card-img" src="assets/projects/customer-behaviour-prediction/cover.webp" alt="Charts from the customer behaviour models: predicted against actual spend, a confusion matrix, feature importances and the income distribution" width="1200" height="750" decoding="async">
+              <ul class="tags" aria-label="Skills">
+                <li class="tag tag--green">Data Science</li>
+                <li class="tag tag--orange">Machine Learning</li>
+                <li class="tag tag--blue">Programming</li>
+              </ul>
+              <h3 class="card-title">Customer Behaviour Prediction</h3>
+              <p class="card-text">Worked in a team of four to predict how retail customers shop and spend, so a business could personalise its promotions. I built the income model, using feature engineering and LASSO regression to explain 75% of income variation for unseen customers.</p>
+              <a class="card-open" href="assets/projects/customer-behaviour-prediction/customer-behaviour-prediction-report.pdf" target="_blank" rel="noopener">View project <span aria-hidden="true">→</span><span class="sr-only"> (PDF report, opens in a new tab)</span></a>
+            </article>
           </div>
         </div>
         <div class="carousel-dots" aria-label="Choose a project"></div>
@@ -632,7 +644,7 @@
   </dialog>
 
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-  <script src="script.js?v=20261013222026"></script>
-  <script src="project.js?v=20261013222026"></script>
+  <script src="script.js?v=20261019143847"></script>
+  <script src="project.js?v=20261019143847"></script>
 </body>
 </html>
